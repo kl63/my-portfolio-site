@@ -50,6 +50,15 @@ jobs:
             echo "Building Next.js app..."
             npm run build
 
+            echo "Checking if PM2 is installed..."
+            if ! command -v pm2 &> /dev/null
+            then
+              echo "PM2 not found, installing..."
+              npm install -g pm2
+            else
+              echo "PM2 is already installed"
+            fi
+
             echo "Checking if PM2 process exists..."
             if pm2 list | grep -q $APP_NAME; then
               echo "Restarting application: $APP_NAME"

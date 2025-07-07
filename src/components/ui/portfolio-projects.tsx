@@ -213,6 +213,7 @@ function CardHoverRevealContent({
   const { isOpen } = useCardHoverRevealContext()
   
   return (
+    // @ts-expect-error - Known compatibility issue between framer-motion's event types and React's native event types
     <motion.div 
       className={cn(
         "absolute inset-0 bg-black/80 backdrop-blur-sm p-6 flex flex-col",

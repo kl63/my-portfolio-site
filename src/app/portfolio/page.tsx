@@ -1,8 +1,11 @@
-import DeveloperPortfolioHero from "@/components/ui/developer-portfolio-hero"
+import React from 'react'
+import DeveloperPortfolioHero from '@/components/ui/developer-portfolio-hero'
+import PortfolioProjects from '@/components/ui/portfolio-projects'
+import SkillsExperienceTimeline from '@/components/ui/skills-experience-timeline'
 
-export default function Home() {
+export default function PortfolioPage() {
   return (
-    <div className="container mx-auto px-4 py-12 md:py-20">
+    <div className="min-h-screen bg-background">
       <DeveloperPortfolioHero 
         name="Kevin Lin"
         title="Full Stack Developer"
@@ -15,6 +18,8 @@ export default function Home() {
         emailAddress="hello@kevinlin.dev"
         resumeUrl="/resume.pdf"
       />
+      <PortfolioProjects />
+      <SkillsExperienceTimeline />
     </div>
   )
 }

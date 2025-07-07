@@ -200,9 +200,9 @@ function CardHoverReveal({
   )
 }
 
-interface CardHoverRevealContentProps extends React.HTMLAttributes<HTMLDivElement> {
-  children: React.ReactNode;
-  className?: string;
+interface CardHoverRevealContentProps extends Omit<HTMLMotionProps<"div">, "animate" | "initial"> {
+  children: React.ReactNode
+  className?: string
 }
 
 function CardHoverRevealContent({ 
@@ -213,7 +213,6 @@ function CardHoverRevealContent({
   const { isOpen } = useCardHoverRevealContext()
   
   return (
-    // @ts-expect-error - Known compatibility issue between framer-motion's event types and React's native event types
     <motion.div 
       className={cn(
         "absolute inset-0 bg-black/80 backdrop-blur-sm p-6 flex flex-col",
@@ -401,7 +400,6 @@ function PortfolioProjects({
                 duration: 0.5, 
                 delay: index * 0.1
               }}
-              // @ts-expect-error - Known type issue with framer-motion
               layout
               layoutId={project.id}
             >

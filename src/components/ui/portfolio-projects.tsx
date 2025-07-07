@@ -1,9 +1,8 @@
 "use client"
 
-"use client"
-
-import * as React from "react"
-import { motion, HTMLMotionProps } from "framer-motion"
+import * as React from "react";
+import Image from "next/image";
+import { motion, HTMLMotionProps, TargetAndTransition, VariantLabels } from "framer-motion"
 import { ExternalLink, Github, Filter } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -89,7 +88,10 @@ const FlipCard = React.memo(
 )
 FlipCard.displayName = "FlipCard"
 
-interface FlipCardFrontProps extends HTMLMotionProps<"div"> {}
+interface FlipCardFrontProps extends Omit<HTMLMotionProps<"div">, "animate"> {
+  // Adding properly typed animate prop for framer-motion
+  animate?: TargetAndTransition | VariantLabels | boolean;
+}
 
 const FlipCardFront = React.memo(
   React.forwardRef<HTMLDivElement, FlipCardFrontProps>(({ className, style, ...props }, ref) => {
@@ -117,7 +119,11 @@ const FlipCardFront = React.memo(
 )
 FlipCardFront.displayName = "FlipCardFront"
 
-interface FlipCardBackProps extends HTMLMotionProps<"div"> {}
+interface FlipCardBackProps extends Omit<HTMLMotionProps<"div">, "animate" | "initial"> {
+  // Adding properly typed animate and initial props for framer-motion
+  animate?: TargetAndTransition | VariantLabels | boolean;
+  initial?: TargetAndTransition | VariantLabels | boolean;
+}
 
 const FlipCardBack = React.memo(
   React.forwardRef<HTMLDivElement, FlipCardBackProps>(({ className, style, ...props }, ref) => {
@@ -194,7 +200,10 @@ function CardHoverReveal({
   )
 }
 
-interface CardHoverRevealContentProps extends React.HTMLAttributes<HTMLDivElement> {}
+interface CardHoverRevealContentProps extends React.HTMLAttributes<HTMLDivElement> {
+  children: React.ReactNode;
+  className?: string;
+}
 
 function CardHoverRevealContent({ 
   children, 
@@ -227,11 +236,32 @@ interface Project {
   id: string
   title: string
   description: string
-  imageUrl: string
+  image: string
   technologies: string[]
   category: string
   liveUrl?: string
   githubUrl?: string
+}
+
+/** 
+ * @deprecated Will be used when implementing project modal detail view 
+ * Keeping for documentation of planned feature
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface ProjectModalProps {
+  project: Project;
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+/** 
+ * @deprecated Will be used when implementing individual project item component
+ * Keeping for documentation of planned feature
+ */
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+interface ProjectItemProps {
+  project: Project;
+  onClick?: () => void;
 }
 
 // Projects data
@@ -240,7 +270,7 @@ const PROJECTS: Project[] = [
     id: "1",
     title: "Personal Portfolio",
     description: "A modern portfolio site built with Next.js and Tailwind CSS.",
-    imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     category: "Web",
     liveUrl: "https://example.com/portfolio",
@@ -250,7 +280,7 @@ const PROJECTS: Project[] = [
     id: "2",
     title: "E-Commerce Platform",
     description: "A full-featured online store with product management and payment processing.",
-    imageUrl: "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?q=80&w=2070",
     technologies: ["React", "Node.js", "MongoDB", "Stripe"],
     category: "Web",
     liveUrl: "https://example.com/ecommerce",
@@ -260,7 +290,7 @@ const PROJECTS: Project[] = [
     id: "3",
     title: "Task Management App",
     description: "An intuitive task manager with drag-and-drop functionality and team collaboration features.",
-    imageUrl: "https://images.unsplash.com/photo-1611224885990-2ae811571c55?q=80&w=2069",
+    image: "https://images.unsplash.com/photo-1611224885990-2ae811571c55?q=80&w=2069",
     technologies: ["React", "Redux", "Firebase", "Material UI"],
     category: "App",
     liveUrl: "https://example.com/task-app",
@@ -270,7 +300,7 @@ const PROJECTS: Project[] = [
     id: "4",
     title: "Weather Dashboard",
     description: "Real-time weather forecasting with interactive maps and location-based services.",
-    imageUrl: "https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=2070",
     technologies: ["Vue.js", "Weather API", "Leaflet", "D3.js"],
     category: "Web",
     liveUrl: "https://example.com/weather",
@@ -280,7 +310,7 @@ const PROJECTS: Project[] = [
     id: "5",
     title: "Social Media Dashboard",
     description: "A social media management platform with analytics and scheduling capabilities.",
-    imageUrl: "https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?q=80&w=2070",
     technologies: ["Angular", "Express", "PostgreSQL", "Chart.js"],
     category: "Web",
     liveUrl: "https://example.com/social",
@@ -290,7 +320,7 @@ const PROJECTS: Project[] = [
     id: "6",
     title: "Fitness Tracker",
     description: "A mobile app for tracking workouts, nutrition, and fitness goals.",
-    imageUrl: "https://images.unsplash.com/photo-1486218119243-13883505764c?q=80&w=2072",
+    image: "https://images.unsplash.com/photo-1486218119243-13883505764c?q=80&w=2072",
     technologies: ["React Native", "Redux", "Firebase", "Expo"],
     category: "App",
     liveUrl: "https://example.com/fitness",
@@ -368,15 +398,15 @@ function PortfolioProjects({
               animate={isLoaded ? { opacity: 1, y: 0 } : {}}
               transition={{ 
                 duration: 0.5, 
-                delay: index * 0.1,
-                ease: "easeOut"
+                delay: index * 0.1
               }}
+              // @ts-expect-error - Known type issue with framer-motion
               layout
               layoutId={project.id}
             >
-              {project.imageUrl.endsWith(".mp4") ? (
+              {project.image.endsWith(".mp4") ? (
                 <video
-                  src={project.imageUrl}
+                  src={project.image}
                   className="h-full w-full object-cover"
                   autoPlay
                   muted
@@ -384,10 +414,12 @@ function PortfolioProjects({
                 />
               ) : (
                 <CardHoverReveal>
-                  <img
-                    src={project.imageUrl || "/images/projects/placeholder.jpg"}
-                    alt={project.title}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                  <Image 
+                    src={project.image} 
+                    alt={project.title} 
+                    width={600}
+                    height={400}
+                    className="h-64 w-full object-cover rounded-t-lg transition-transform duration-500 group-hover:scale-105" 
                   />
                   <CardHoverRevealContent>
                     <div className="flex flex-col justify-between h-full text-white">

@@ -61,7 +61,7 @@ export default function ContactPage() {
               </div>
               <h3 className="text-xl font-semibold mb-2">Message Sent Successfully!</h3>
               <p className="text-muted-foreground mb-6">
-                Thank you for your message. I'll get back to you as soon as possible.
+                Thank you for your message. I&apos;ll get back to you as soon as possible.
               </p>
               <Button onClick={() => setIsSubmitted(false)}>Send Another Message</Button>
             </motion.div>
@@ -91,7 +91,7 @@ export default function ContactPage() {
                     type="email"
                     value={formState.email}
                     onChange={handleChange}
-                    placeholder="your.email@example.com"
+                    placeholder="your email address"
                     required
                   />
                 </div>

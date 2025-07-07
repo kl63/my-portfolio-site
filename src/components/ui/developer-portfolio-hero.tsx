@@ -1,10 +1,11 @@
 "use client"
 
 import React, { useState, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
+import { motion, AnimatePresence, easeInOut, easeIn } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Avatar } from '@/components/ui/avatar';
-import { ChevronRight, Github, Linkedin, Mail, Download, ExternalLink, MoonIcon, SunIcon } from 'lucide-react';
+import { ChevronRight, Download, ExternalLink, Github, Linkedin, Mail } from "lucide-react";
+import Image from "next/image";
 
 // Utility function
 function cn(...classes: (string | undefined | null | boolean)[]): string {
@@ -45,16 +46,16 @@ const AnimatedTextCycle: React.FC<AnimatedTextCycleProps> = ({
       filter: "blur(0px)",
       transition: {
         duration: 0.4,
-        ease: "easeOut"
+        ease: easeInOut,
       }
     },
     exit: { 
-      y: 20,
+      y: -20, 
       opacity: 0,
       filter: "blur(8px)",
       transition: { 
         duration: 0.3, 
-        ease: "easeIn"
+        ease: easeIn,
       }
     },
   };
@@ -129,7 +130,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
       transition: {
         delay: 0.1 * i,
         duration: 0.6,
-        ease: "easeOut"
+        ease: easeInOut,
       }
     }),
     hover: {
@@ -168,7 +169,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
               variants={fadeInUpVariants}
               className="text-lg font-medium text-primary"
             >
-              Hello, I'm
+              Hello, I&apos;m
             </motion.p>
             <motion.h1 
               custom={2} 
@@ -203,7 +204,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
             variants={fadeInUpVariants}
             className="flex flex-wrap gap-2"
           >
-            {skills.map((skill, index) => (
+            {skills.map((skill) => (
               <motion.div 
                 key={skill}
                 whileHover="hover" 
@@ -233,7 +234,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
               asChild
             >
               <a href={resumeUrl} download>
-                <Download className="mr-2 h-4 w-4" />
+                <Download className="ml-1 h-4 w-4" />
                 Resume
               </a>
             </Button>
@@ -275,7 +276,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.97 }}
               >
-                <Mail className="h-5 w-5" />
+                <Mail className="h-4 w-4 mr-2" />
               </motion.a>
             )}
           </motion.div>
@@ -294,10 +295,12 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
             transition={{ duration: 0.5 }}
           >
             <Avatar className="w-full h-full rounded-full overflow-hidden border-4 border-primary/20">
-              <img 
+              <Image 
                 src={imageUrl} 
                 alt={name} 
-                className="object-cover" 
+                width={400} 
+                height={400} 
+                className="w-full h-full object-cover" 
               />
             </Avatar>
             
@@ -305,7 +308,6 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
               className="absolute -top-4 -right-4 bg-secondary text-secondary-foreground p-3 rounded-full shadow-lg"
               animate={{
                 rotate: [0, 360],
-                scale: [1, 1.1, 1],
               }}
               transition={{
                 duration: 10,
@@ -320,7 +322,6 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
               className="absolute -bottom-4 -left-4 bg-secondary text-secondary-foreground p-3 rounded-full shadow-lg"
               animate={{
                 rotate: [360, 0],
-                scale: [1, 1.1, 1],
               }}
               transition={{
                 duration: 10,
@@ -328,7 +329,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
                 ease: "linear",
               }}
             >
-              <ExternalLink className="w-6 h-6" />
+              <ExternalLink className="ml-1 h-3 w-3" />
             </motion.div>
           </motion.div>
         </motion.div>

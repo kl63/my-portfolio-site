@@ -11,7 +11,6 @@ export default function PortfolioPage() {
         title="Full Stack Developer"
         roles={["Web Developer", "UI Designer", "Problem Solver", "Tech Enthusiast"]}
         bio="I craft elegant solutions with modern technologies to build responsive and intuitive user experiences."
-        imageUrl="/profile-placeholder.png"
         skills={["React", "TypeScript", "Next.js", "Node.js", "Tailwind CSS"]}
         githubUrl="https://github.com/kl63"
         linkedinUrl="https://linkedin.com/in/kevin-lin"

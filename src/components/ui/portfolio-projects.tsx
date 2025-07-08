@@ -265,12 +265,12 @@ interface ProjectItemProps {
 }
 
 // Projects data
-const PROJECTS: Project[] = [
+export const PROJECTS: Project[] = [
   {
     id: "1",
     title: "Personal Portfolio",
     description: "A modern portfolio site built with Next.js and Tailwind CSS.",
-    image: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
     technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
     category: "Web",
     liveUrl: "https://example.com/portfolio",
@@ -280,7 +280,7 @@ const PROJECTS: Project[] = [
     id: "2",
     title: "E-Commerce Platform",
     description: "A full-featured online store with product management and payment processing.",
-    image: "https://images.unsplash.com/photo-1607082350899-7e105aa886ae?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800",
     technologies: ["React", "Node.js", "MongoDB", "Stripe"],
     category: "Web",
     liveUrl: "https://example.com/ecommerce",
@@ -290,7 +290,7 @@ const PROJECTS: Project[] = [
     id: "3",
     title: "Task Management App",
     description: "An intuitive task manager with drag-and-drop functionality and team collaboration features.",
-    image: "https://images.unsplash.com/photo-1611224885990-2ae811571c55?q=80&w=2069",
+    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800",
     technologies: ["React", "Redux", "Firebase", "Material UI"],
     category: "App",
     liveUrl: "https://example.com/task-app",
@@ -300,7 +300,7 @@ const PROJECTS: Project[] = [
     id: "4",
     title: "Weather Dashboard",
     description: "Real-time weather forecasting with interactive maps and location-based services.",
-    image: "https://images.unsplash.com/photo-1592210454359-9043f067919b?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=800",
     technologies: ["Vue.js", "Weather API", "Leaflet", "D3.js"],
     category: "Web",
     liveUrl: "https://example.com/weather",
@@ -310,7 +310,7 @@ const PROJECTS: Project[] = [
     id: "5",
     title: "Social Media Dashboard",
     description: "A social media management platform with analytics and scheduling capabilities.",
-    image: "https://images.unsplash.com/photo-1516251193007-45ef944ab0c6?q=80&w=2070",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
     technologies: ["Angular", "Express", "PostgreSQL", "Chart.js"],
     category: "Web",
     liveUrl: "https://example.com/social",
@@ -320,7 +320,7 @@ const PROJECTS: Project[] = [
     id: "6",
     title: "Fitness Tracker",
     description: "A mobile app for tracking workouts, nutrition, and fitness goals.",
-    image: "https://images.unsplash.com/photo-1486218119243-13883505764c?q=80&w=2072",
+    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800",
     technologies: ["React Native", "Redux", "Firebase", "Expo"],
     category: "App",
     liveUrl: "https://example.com/fitness",
@@ -419,6 +419,9 @@ function PortfolioProjects({
                     width={600}
                     height={400}
                     className="h-64 w-full object-cover rounded-t-lg transition-transform duration-500 group-hover:scale-105" 
+                    priority={index < 3} /* Prioritize loading first 3 images */
+                    loading={index < 3 ? "eager" : "lazy"}
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
                   <CardHoverRevealContent>
                     <div className="flex flex-col justify-between h-full text-white">

@@ -1,13 +1,15 @@
 'use client';
 
-import { usePathname, useSearchParams } from 'next/navigation';
 import Script from 'next/script';
+import { Suspense } from 'react';
+import { usePathname, useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 
 // Google Analytics Measurement ID
 const GA_MEASUREMENT_ID = 'G-0NVCC4PVT1';
 
-export default function GoogleAnalytics() {
+// Separate component for path tracking that uses useSearchParams
+function GoogleAnalyticsPathTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   
@@ -19,9 +21,14 @@ export default function GoogleAnalytics() {
       });
     }
   }, [pathname, searchParams]);
+  
+  return null;
+}
 
+export default function GoogleAnalytics() {
   return (
     <>
+      {/* Scripts to load Google Analytics */}
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
@@ -40,6 +47,11 @@ export default function GoogleAnalytics() {
           `,
         }}
       />
+      
+      {/* Wrap the path tracker in Suspense to avoid build errors */}
+      <Suspense fallback={null}>
+        <GoogleAnalyticsPathTracker />
+      </Suspense>
     </>
   );
 }

@@ -264,12 +264,8 @@ const LoginForm: React.FC = () => {
     }
   }
 
-  // This function is currently used via the onClick handlers in the UI
-const toggleForm = () => {
-    setIsLogin(!isLogin)
-    setSubmitStatus('idle')
-    setErrors({})
-  }
+  // Reset form state happens inline in the onClick handlers
+  // We clear errors and reset submission status when switching forms
 
   // Animation variants
   const containerVariants = {

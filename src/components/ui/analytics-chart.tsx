@@ -7,7 +7,7 @@ import { Card } from '@/components/ui/card'
 interface DataPoint {
   name: string
   value: number
-  [key: string]: any
+  [key: string]: string | number | boolean | null
 }
 
 interface ChartProps {

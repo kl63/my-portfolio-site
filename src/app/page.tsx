@@ -10,10 +10,10 @@ export default function Home() {
         <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-2">
           <DeveloperPortfolioHero 
             name="Kevin Lin"
-            title="Full Stack Developer"
-            roles={["Web Developer", "UI Designer", "Problem Solver", "Tech Enthusiast"]}
-            bio="I craft elegant solutions with modern technologies to build responsive and intuitive user experiences."
-            skills={["React", "TypeScript", "Next.js", "Node.js", "Tailwind CSS"]}
+            title="AI Full Stack Developer"
+            roles={["AI Engineer", "ML Integration Specialist", "Web Developer", "Solution Architect"]}
+            bio="I craft intelligent applications that leverage AI/ML technologies to solve complex problems, delivering responsive and intuitive user experiences."
+            skills={["React", "TypeScript", "Next.js", "Nodes.js", "Python", "LLM Integration"]}
             githubUrl="https://github.com/kl63"
             linkedinUrl="https://linkedin.com/in/kevin-lin"
             emailAddress="hello@kevinlin.dev"

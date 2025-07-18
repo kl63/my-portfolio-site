@@ -32,8 +32,8 @@ interface ApiResponse<T> {
 
 // Helper function to fetch from API with auth token
 async function fetchWithAuth<T>(endpoint: string, mockData: T): Promise<ApiResponse<T>> {
-  // Mock data is only used if explicitly requested or as fallback if enabled in the function call
-  const useMockData = false; // Set to false to disable automatic mock data
+  // Flag to control mock data behavior - can be toggled for debugging
+  const useMockData = false; // No mock data - showing real API errors
   
   if (useMockData) {
     console.log(`Using mock data for ${endpoint}`);
@@ -41,12 +41,14 @@ async function fetchWithAuth<T>(endpoint: string, mockData: T): Promise<ApiRespo
   }
 
   try {
-    const token = localStorage.getItem('access_token');
+    const token = typeof window !== 'undefined' ? localStorage.getItem('access_token') : null;
     
     if (!token) {
+      console.error('No authentication token found');
       return { error: 'No authentication token found' };
     }
     
+    console.log(`Fetching from ${endpoint}...`);
     const response = await fetch(endpoint, {
       headers: {
         'Authorization': `Bearer ${token}`
@@ -54,16 +56,47 @@ async function fetchWithAuth<T>(endpoint: string, mockData: T): Promise<ApiRespo
     });
     
     if (!response.ok) {
-      const errorData = await response.json();
-      console.warn('API error:', errorData);
-      return { error: errorData.error || 'Failed to fetch data' };
+      let errorMessage;
+      try {
+        // Check if the response is HTML (which would cause JSON parsing errors)
+        const contentType = response.headers.get('content-type');
+        if (contentType && contentType.includes('text/html')) {
+          errorMessage = `Received HTML instead of JSON: HTTP Error ${response.status}`;
+          console.warn('API returned HTML instead of JSON:', { status: response.status });
+          return { error: errorMessage };
+        }
+        
+        const errorData = await response.json();
+        errorMessage = errorData.error || `HTTP Error ${response.status}: ${response.statusText}`;
+        console.warn('API response not OK:', { status: response.status, errorData });
+      } catch (parseError) {
+        errorMessage = `HTTP Error ${response.status}: ${response.statusText}`;
+        console.warn('API response not OK and could not parse JSON:', response.status, parseError);
+      }
+      return { error: errorMessage };
     }
     
-    const data = await response.json();
-    return { data };
+    try {
+      const text = await response.text();
+      
+      // Check if the response might be HTML
+      if (text.trim().startsWith('<!DOCTYPE') || text.trim().startsWith('<html')) {
+        console.error('Received HTML instead of JSON');
+        return { error: 'Received HTML instead of JSON response' };
+      }
+      
+      // Try to parse as JSON
+      const data = JSON.parse(text);
+      console.log(`Successfully fetched data from ${endpoint}`);
+      return { data };
+    } catch (parseError) {
+      console.error('Failed to parse API response:', parseError);
+      return { error: 'Invalid JSON response from API' };
+    }
   } catch (error) {
-    console.error('API fetch error:', error);
-    return { error: error instanceof Error ? error.message : 'Failed to fetch data' };
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
+    console.error(`API fetch error for ${endpoint}:`, error);
+    return { error: errorMessage };
   }
 }
 
@@ -84,7 +117,7 @@ export async function fetchTopPages(limit = 5) {
 
 // Fetch device breakdown
 export async function fetchDeviceData() {
-  return fetchWithAuth<ChartDataPoint[]>('/api/analytics?type=devices', fallbackData.visitorsByDeviceData);
+  return fetchWithAuth<ChartDataPoint[]>('/api/analytics/devices', fallbackData.visitorsByDeviceData);
 }
 
 // Fetch bounce rate over time

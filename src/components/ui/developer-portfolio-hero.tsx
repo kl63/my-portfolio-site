@@ -190,9 +190,12 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
                 variant="outline" 
                 size="lg"
                 className="rounded-full px-8 border-muted hover:bg-secondary/80"
+                asChild
               >
-                <Download className="mr-2 h-4 w-4" />
-                Resume
+                <a href={resumeUrl} download>
+                  <Download className="mr-2 h-4 w-4" />
+                  Resume
+                </a>
               </Button>
             )}
           </motion.div>

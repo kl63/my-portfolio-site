@@ -11,11 +11,11 @@ export default function Home() {
           <DeveloperPortfolioHero 
             name="Kevin Lin"
             title="AI Full Stack Developer"
-            roles={["AI Engineer", "ML Integration Specialist", "Web Developer", "Solution Architect"]}
+            roles={["AI Engineer", "Full Stack Developer","Software Engineer"]}
             bio="I craft intelligent applications that leverage AI/ML technologies to solve complex problems, delivering responsive and intuitive user experiences."
             skills={["React", "TypeScript", "Next.js", "Nodes.js", "Python", "LLM Integration"]}
             githubUrl="https://github.com/kl63"
-            linkedinUrl="https://linkedin.com/in/kevin-lin"
+            linkedinUrl="https://www.linkedin.com/in/linkevin19/"
             emailAddress="hello@kevinlin.dev"
             resumeUrl="/resume.pdf"
           />

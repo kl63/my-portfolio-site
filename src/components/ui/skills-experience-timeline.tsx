@@ -39,9 +39,9 @@ const CircleProgress = ({
   const strokeDashoffset = circumference * (1 - fillPercentage)
 
   const defaultGetColor = (percentage: number) => {
-    if (percentage < 0.7) return "stroke-emerald-500"
-    if (percentage < 0.9) return "stroke-amber-500"
-    return "stroke-red-500"
+    if (percentage >= 0.85) return "stroke-emerald-500" // Green for high (85%+)
+    if (percentage >= 0.70) return "stroke-amber-500"  // Yellow for middle (70-84%)
+    return "stroke-red-500"                            // Red for low (<70%)
   }
 
   const currentColor = defaultGetColor(fillPercentage)
@@ -140,38 +140,80 @@ interface Experience {
 const SKILLS: Skill[] = [
   {
     name: "React",
-    level: 90,
+    level: 95,
     maxLevel: 100,
     icon: <Code className="w-5 h-5" />,
     category: "Frontend",
   },
   {
     name: "Next.js",
-    level: 85,
+    level: 95,
     maxLevel: 100,
     icon: <Code className="w-5 h-5" />,
     category: "Frontend",
   },
   {
+    name: "Node.js",
+    level: 95,
+    maxLevel: 100,
+    icon: <Server className="w-5 h-5" />,
+    category: "Backend",
+  },
+  {
+    name: "Git",
+    level: 95,
+    maxLevel: 100,
+    icon: <Code className="w-5 h-5" />,
+    category: "DevOps",
+  },
+  {
     name: "TypeScript",
-    level: 80,
+    level: 90,
     maxLevel: 100,
     icon: <Code className="w-5 h-5" />,
     category: "Language",
   },
   {
     name: "Tailwind CSS",
-    level: 95,
+    level: 90,
     maxLevel: 100,
     icon: <Palette className="w-5 h-5" />,
     category: "Frontend",
   },
   {
-    name: "Node.js",
-    level: 85,
+    name: "PostgreSQL",
+    level: 90,
+    maxLevel: 100,
+    icon: <Database className="w-5 h-5" />,
+    category: "Database",
+  },
+  {
+    name: "FastAPI",
+    level: 90,
     maxLevel: 100,
     icon: <Server className="w-5 h-5" />,
     category: "Backend",
+  },
+  {
+    name: "Python",
+    level: 90,
+    maxLevel: 100,
+    icon: <Code className="w-5 h-5" />,
+    category: "Language",
+  },
+  {
+    name: "Docker",
+    level: 80,
+    maxLevel: 100,
+    icon: <Server className="w-5 h-5" />,
+    category: "DevOps",
+  },
+  {
+    name: "UI/UX Design",
+    level: 80,
+    maxLevel: 100,
+    icon: <Palette className="w-5 h-5" />,
+    category: "Design",
   },
   {
     name: "MongoDB",
@@ -182,81 +224,53 @@ const SKILLS: Skill[] = [
   },
   {
     name: "REST API",
-    level: 85,
+    level: 70,
     maxLevel: 100,
     icon: <Globe className="w-5 h-5" />,
     category: "Backend",
   },
   {
-    name: "GraphQL",
-    level: 70,
-    maxLevel: 100,
-    icon: <Database className="w-5 h-5" />,
-    category: "Backend",
-  },
-  {
-    name: "React Native",
+    name: "Swift",
     level: 65,
     maxLevel: 100,
     icon: <Smartphone className="w-5 h-5" />,
     category: "Mobile",
-  },
-  {
-    name: "UI/UX Design",
-    level: 80,
-    maxLevel: 100,
-    icon: <Palette className="w-5 h-5" />,
-    category: "Design",
   },
 ]
 
 // Experience data
 const EXPERIENCE: Experience[] = [
   {
-    company: "Innovative Tech Solutions",
-    position: "Senior Frontend Developer",
-    duration: "2022 - Present",
-    location: "San Francisco, CA",
+    company: "Theoforge AI Consulting",
+    position: "Project Manager",
+    duration: " Jan. 2025 - May. 2025",
+    location: "Newark, NJ",
     description:
       "Lead the frontend development team in building modern, responsive web applications for enterprise clients.",
-    technologies: ["React", "TypeScript", "Next.js", "Tailwind CSS", "Redux"],
+    technologies: ["React", "TypeScript", "Next.js", "FastAPI", "Python", "Docker", "PostgreSQL", "Neo4j", "LLM", "MCP", "PgAdmin", "Jira"],
     achievements: [
       "Led the development of a new design system that reduced development time by 30%",
       "Improved application performance by 40% through code optimization and lazy loading",
       "Mentored junior developers and established frontend best practices",
     ],
-    url: "https://example.com/company1",
+    url: "https://github.com/tomasGonz67/theoforge-be",
   },
   {
-    company: "WebSphere Technologies",
-    position: "Frontend Developer",
-    duration: "2020 - 2022",
-    location: "Austin, TX",
+    company: "MetLife Group",
+    position: "Product Development Engineering Intern",
+    duration: "Jun. 2024 - Aug. 2024",
+    location: "Bridgewaters, NJ",
     description:
       "Developed and maintained multiple client-facing web applications with a focus on performance and accessibility.",
-    technologies: ["React", "JavaScript", "SCSS", "REST API", "Jest"],
+    technologies: ["Microsoft Azure", "Maven", "MS Sharepoint", "React Native", "Jest"],
     achievements: [
       "Implemented accessibility improvements resulting in WCAG AA compliance",
       "Built reusable component library used across 10+ projects",
       "Reduced bundle size by 25% through code splitting and optimization",
     ],
-    url: "https://example.com/company2",
+    url: "https://",
   },
-  {
-    company: "Digital Solutions Inc.",
-    position: "Web Developer",
-    duration: "2018 - 2020",
-    location: "Chicago, IL",
-    description:
-      "Worked on full-stack development for e-commerce and SaaS applications.",
-    technologies: ["JavaScript", "Node.js", "Express", "MongoDB", "Bootstrap"],
-    achievements: [
-      "Developed custom e-commerce platform serving 10,000+ daily users",
-      "Implemented payment gateway integrations with Stripe and PayPal",
-      "Reduced server response time by 60% through database optimization",
-    ],
-    url: "https://example.com/company3",
-  },
+
 ]
 
 // Categories

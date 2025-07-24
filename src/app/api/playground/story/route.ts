@@ -39,7 +39,7 @@ export async function POST(request: NextRequest) {
 
     if (!process.env.OPENAI_API_KEY) {
       return NextResponse.json({ 
-        story: generateFallbackStory(topic, storyType, tone)
+        story: generateFallbackStory(topic, storyType)
       });
     }
 
@@ -66,7 +66,7 @@ export async function POST(request: NextRequest) {
       temperature: 0.8,
     });
 
-    const story = completion.choices[0]?.message?.content || generateFallbackStory(topic, storyType, tone);
+    const story = completion.choices[0]?.message?.content || generateFallbackStory(topic, storyType);
 
     return NextResponse.json({ story });
   } catch (error) {
@@ -79,12 +79,12 @@ export async function POST(request: NextRequest) {
     }));
 
     return NextResponse.json({ 
-      story: generateFallbackStory(topic, storyType, tone)
+      story: generateFallbackStory(topic, storyType)
     });
   }
 }
 
-function generateFallbackStory(topic: string, storyType: string, tone: string): string {
+function generateFallbackStory(topic: string, storyType: string): string {
   const fallbackStories = {
     'short-story': `# A Tale of ${topic}
 

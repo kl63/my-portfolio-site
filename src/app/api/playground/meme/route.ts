@@ -3,7 +3,7 @@ import OpenAI from 'openai';
 
 export async function POST(request: NextRequest) {
   try {
-    const { template, topText, bottomText, generateCaption, context } = await request.json();
+    const { template, topText, bottomText, generateCaption } = await request.json();
 
     // Fallback meme captions if no API key
     if (!process.env.OPENAI_API_KEY) {

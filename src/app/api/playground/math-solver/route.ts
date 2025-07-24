@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     console.error('Error solving math problem:', error);
     
     // Return fallback solution on error
-    const { problem, mathType, showSteps } = await request.json();
+    const { problem, mathType } = await request.json();
     const fallbackSolution = generateFallbackSolution(problem, mathType);
     return NextResponse.json({ solution: fallbackSolution });
   }

@@ -40,7 +40,7 @@ export default function ChatbotPage() {
     scrollToBottom();
   }, [messages]);
 
-  const getThemePrompt = (theme: string) => {
+  // const getThemePrompt = (theme: string) => {
     const prompts = {
       general: "You are a helpful AI assistant. Provide clear, accurate, and helpful responses.",
       study: "You are a study buddy. Help with learning, explain concepts clearly, and encourage academic growth.",
@@ -282,7 +282,7 @@ export default function ChatbotPage() {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder="Type your message..."
+                  placeholder={`Ask me anything about AI, technology, or just chat!`}
                   disabled={isLoading}
                   className="flex-1"
                 />

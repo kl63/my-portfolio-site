@@ -49,7 +49,7 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function createResumePrompt(resumeData: any, resumeType: string): string {
+function createResumePrompt(resumeData: Record<string, any>, resumeType: string): string {
   const { personalInfo, summary, experience, education, skills, jobTitle, jobDescription } = resumeData;
   
   let styleInstructions = '';
@@ -100,26 +100,21 @@ ${styleInstructions}
 Please format this as a complete, professional resume with proper sections, bullet points, and formatting. Make it ATS-friendly and highlight the most relevant qualifications for the target role.`;
 }
 
-function generateFallbackResume(resumeData: any, resumeType: string): string {
-  const { personalInfo, summary, experience, education, skills, jobTitle } = resumeData;
-  
-  return `${personalInfo.name.toUpperCase()}
-${personalInfo.email} | ${personalInfo.phone} | ${personalInfo.location}
-${personalInfo.linkedin}
+function generateFallbackResume(name: string, email: string): string {
+  return `${name.toUpperCase()}
+${email}
 
 PROFESSIONAL SUMMARY
-${summary || 'Dedicated professional with strong background in their field, seeking to contribute expertise and drive results in a challenging role.'}
+Dedicated professional with strong background in their field, seeking to contribute expertise and drive results in a challenging role.
 
 WORK EXPERIENCE
-${experience || 'Please provide your work experience details.'}
+Please provide your work experience details through the form above.
 
 EDUCATION
-${education || 'Educational background information.'}
+Educational background information.
 
 SKILLS
-${skills || 'Relevant technical and soft skills.'}
-
-${jobTitle ? `\nTARGET POSITION: ${jobTitle}` : ''}
+Relevant technical and soft skills.
 
 ---
 Note: This is a basic resume template. For a more polished, AI-enhanced resume, please ensure your OpenAI API key is configured.`;

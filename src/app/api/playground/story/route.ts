@@ -72,7 +72,7 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error('OpenAI API error:', error);
     
-    const { topic, storyType = 'short-story', tone = 'whimsical' } = await request.json().catch(() => ({ 
+    const { topic, storyType = 'short-story' } = await request.json().catch(() => ({ 
       topic: 'a magical adventure', 
       storyType: 'short-story', 
       tone: 'whimsical' 

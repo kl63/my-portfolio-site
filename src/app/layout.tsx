@@ -4,6 +4,7 @@ import "./globals.css";
 import ColorfulNavbar from "@/components/ui/colorful-navbar";
 import ColorfulFooter from "@/components/ui/colorful-footer";
 import GoogleAnalytics from "@/components/google-analytics";
+import MiniChatbox from "@/components/ui/mini-chatbox";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -36,6 +37,7 @@ export default function RootLayout({
         <ColorfulNavbar />
         <main className="flex-grow pt-16">{children}</main>
         <ColorfulFooter />
+        <MiniChatbox />
       </body>
     </html>
   );

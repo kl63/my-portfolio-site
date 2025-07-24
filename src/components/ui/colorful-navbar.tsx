@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Home, FolderOpen, Award, Mail } from 'lucide-react'
+import { Menu, X, Home, FolderOpen, Award, Mail, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -24,6 +24,7 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
     { name: "Home", href: "/", icon: <Home size={18} /> },
     { name: "Projects", href: "/projects", icon: <FolderOpen size={18} /> },
     { name: "Skills", href: "/skills", icon: <Award size={18} /> },
+    { name: "AI Playground", href: "/playground", icon: <Sparkles size={18} /> },
     { name: "Contact", href: "/contact", icon: <Mail size={18} /> }
   ]
 }) => {
@@ -84,7 +85,9 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
             animate={{ opacity: 1, transition: { staggerChildren: 0.1 } }}
           >
             {navItems.map((item, index) => {
-              const isActive = pathname === item.href
+              const isActive = item.href === '/playground' 
+                ? pathname.startsWith('/playground')
+                : pathname === item.href
               
               return (
                 <motion.div
@@ -105,11 +108,19 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                     key={item.name} 
                     href={item.href} 
                     className={`flex items-center gap-3 w-full relative ${isActive 
-                      ? 'bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600 font-bold'
-                      : 'text-foreground hover:bg-clip-text hover:text-transparent hover:bg-gradient-to-r hover:from-purple-600 hover:via-pink-600 hover:to-blue-600'}`}
+                      ? 'font-bold'
+                      : 'text-foreground hover:text-purple-600'}`}
                   >
-                    {item.icon}
-                    <span className="ml-1 text-base">{item.name}</span>
+                    <span className={`${isActive 
+                      ? 'text-purple-600'
+                      : 'text-foreground'}`}>
+                      {item.icon}
+                    </span>
+                    <span className={`ml-1 text-base ${isActive 
+                      ? 'bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600'
+                      : ''}`}>
+                      {item.name}
+                    </span>
                     {isActive && (
                       <motion.span 
                         className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600"

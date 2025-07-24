@@ -7,9 +7,15 @@ export async function POST(request: NextRequest) {
 
     // Fallback resume if no API key
     if (!process.env.OPENAI_API_KEY) {
-      const fallbackResume = generateFallbackResume(resumeData, resumeType);
-      return NextResponse.json({ resume: fallbackResume });
+      return NextResponse.json({ 
+        resume: generateFallbackResume(resumeData, resumeType)
+      });
     }
+
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     // Create the prompt based on resume type and data
     const prompt = createResumePrompt(resumeData, resumeType);

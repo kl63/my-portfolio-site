@@ -21,6 +21,11 @@ export async function POST(request: NextRequest) {
       prompt = `Make this meme funnier or suggest improvements. Template: ${template}, Top: "${topText}", Bottom: "${bottomText}". Provide a witty comment or alternative caption.`;
     }
 
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const completion = await openai.chat.completions.create({
       model: "gpt-3.5-turbo",
       messages: [

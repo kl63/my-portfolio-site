@@ -48,6 +48,11 @@ export async function POST(request: NextRequest) {
       });
     }
 
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     const prompt = getFortunePrompt(question, type, style);
 
     const completion = await openai.chat.completions.create({

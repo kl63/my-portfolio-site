@@ -13,9 +13,15 @@ export async function POST(request: NextRequest) {
 
     // Fallback transcription if no API key
     if (!process.env.OPENAI_API_KEY) {
-      const fallbackText = generateFallbackTranscription(language);
-      return NextResponse.json({ text: fallbackText });
+      return NextResponse.json({ 
+        transcription: 'Audio transcription is not available without API key.'
+      });
     }
+
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     // Use OpenAI Whisper for transcription
     const transcription = await openai.audio.transcriptions.create({

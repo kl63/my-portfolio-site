@@ -15,6 +15,11 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ solution: fallbackSolution });
     }
 
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
+
     // Create prompt based on math type and requirements
     const prompt = createMathPrompt(problem, mathType, showSteps);
 

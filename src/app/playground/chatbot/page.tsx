@@ -40,16 +40,7 @@ export default function ChatbotPage() {
     scrollToBottom();
   }, [messages]);
 
-  // const getThemePrompt = (theme: string) => {
-    const prompts = {
-      general: "You are a helpful AI assistant. Provide clear, accurate, and helpful responses.",
-      study: "You are a study buddy. Help with learning, explain concepts clearly, and encourage academic growth.",
-      career: "You are a career coach. Provide professional advice, help with career planning, and offer constructive guidance.",
-      therapist: "You are a supportive wellness companion. Be empathetic, understanding, and provide emotional support while being clear you're not a replacement for professional therapy.",
-      creative: "You are a creative partner. Help brainstorm ideas, provide creative inspiration, and support artistic endeavors."
-    };
-    return prompts[theme as keyof typeof prompts] || prompts.general;
-  };
+
 
   const sendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
@@ -282,7 +273,7 @@ export default function ChatbotPage() {
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}
                   onKeyPress={handleKeyPress}
-                  placeholder={`Ask me anything about AI, technology, or just chat!`}
+                  placeholder="Type your message..."
                   disabled={isLoading}
                   className="flex-1"
                 />

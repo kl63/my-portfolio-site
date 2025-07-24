@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const getStoryPrompt = (topic: string, storyType: string, tone: string) => {
   const typeInstructions = {
     'short-story': 'Write a complete short story of 200-500 words with a clear beginning, middle, and end.',
@@ -46,6 +42,11 @@ export async function POST(request: NextRequest) {
         story: generateFallbackStory(topic, storyType, tone)
       });
     }
+
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const prompt = getStoryPrompt(topic, storyType, tone);
 

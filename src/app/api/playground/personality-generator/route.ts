@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY || '',
-});
-
 export async function POST(request: NextRequest) {
   try {
     const { personalityType, genre, customPrompt } = await request.json();
@@ -45,6 +41,11 @@ export async function POST(request: NextRequest) {
         personality: randomPersonality
       });
     }
+
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const prompt = `Generate a detailed character personality for a ${personalityType} character in a ${genre} setting.
 

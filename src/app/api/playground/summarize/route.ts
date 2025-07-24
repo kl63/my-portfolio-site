@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const getSummaryPrompt = (text: string, length: string, style: string) => {
   const lengthInstructions = {
     'short': 'Provide a very concise summary in 1-2 sentences (20-40 words).',

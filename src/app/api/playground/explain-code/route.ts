@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const getExplanationPrompt = (code: string, language: string, level: string) => {
   const levelInstructions = {
     'beginner': 'Explain this code in very simple terms that a complete beginner can understand. Avoid technical jargon and use analogies when helpful.',
@@ -42,6 +38,11 @@ export async function POST(request: NextRequest) {
         explanation: generateFallbackExplanation(code, language, level)
       });
     }
+
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     const prompt = getExplanationPrompt(code, language, level);
 

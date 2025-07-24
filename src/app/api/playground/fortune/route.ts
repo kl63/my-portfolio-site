@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const getFortunePrompt = (question: string, type: string, style: string) => {
   const typeInstructions = {
     'general': 'Provide general life guidance and wisdom.',

@@ -1,10 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
-const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,
-});
-
 const getSystemPrompt = (theme: string) => {
   const prompts = {
     general: "You are a helpful AI assistant. Provide clear, accurate, and helpful responses to any questions or topics the user brings up. Be friendly, informative, and concise.",
@@ -29,6 +25,11 @@ export async function POST(request: NextRequest) {
         response: "I'm sorry, but the AI service is not configured. Please add your OpenAI API key to the environment variables." 
       });
     }
+
+    // Initialize OpenAI client at runtime
+    const openai = new OpenAI({
+      apiKey: process.env.OPENAI_API_KEY,
+    });
 
     // Prepare messages for OpenAI
     const messages = [

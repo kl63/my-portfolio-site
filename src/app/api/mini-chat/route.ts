@@ -7,7 +7,7 @@ const openai = new OpenAI({
 
 export async function POST(request: NextRequest) {
   try {
-    const { message, context } = await request.json();
+    const { message } = await request.json();
 
     if (!process.env.OPENAI_API_KEY) {
       // Fallback responses when no API key

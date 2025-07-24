@@ -15,7 +15,7 @@ export async function POST(request: NextRequest) {
 
     // Fallback solution if no API key
     if (!process.env.OPENAI_API_KEY) {
-      const fallbackSolution = generateFallbackSolution(problem, mathType, showSteps);
+      const fallbackSolution = generateFallbackSolution(problem, mathType);
       return NextResponse.json({ solution: fallbackSolution });
     }
 
@@ -46,7 +46,7 @@ export async function POST(request: NextRequest) {
     
     // Return fallback solution on error
     const { problem, mathType, showSteps } = await request.json();
-    const fallbackSolution = generateFallbackSolution(problem, mathType, showSteps);
+    const fallbackSolution = generateFallbackSolution(problem, mathType);
     return NextResponse.json({ solution: fallbackSolution });
   }
 }
@@ -85,7 +85,7 @@ function createMathPrompt(problem: string, mathType: string, showSteps: boolean)
   return prompt;
 }
 
-function generateFallbackSolution(problem: string, mathType: string, showSteps: boolean): string {
+function generateFallbackSolution(problem: string, mathType: string): string {
   const fallbackSolutions: { [key: string]: string } = {
     'algebra': `Problem: ${problem}
 

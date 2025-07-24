@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
         content: getSystemPrompt(theme)
       },
       // Add recent conversation history for context
-      ...history.slice(-6).map((msg: any) => ({
+      ...history.slice(-6).map((msg: { role: string; content: string }) => ({
         role: msg.role,
         content: msg.content
       })),

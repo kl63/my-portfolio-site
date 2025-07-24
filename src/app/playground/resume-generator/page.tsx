@@ -55,7 +55,7 @@ export default function ResumeGeneratorPage() {
       setResumeData(prev => ({
         ...prev,
         [field]: {
-          ...prev[field as keyof ResumeData],
+          ...(prev[field as keyof ResumeData] as Record<string, any>),
           [subField]: value
         }
       }));

@@ -55,6 +55,7 @@ export default function ResumeGeneratorPage() {
       setResumeData(prev => ({
         ...prev,
         [field]: {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           ...(prev[field as keyof ResumeData] as Record<string, any>),
           [subField]: value
         }

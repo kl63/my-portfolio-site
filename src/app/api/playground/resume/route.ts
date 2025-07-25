@@ -49,7 +49,8 @@ export async function POST(request: NextRequest) {
   }
 }
 
-function createResumePrompt(resumeData: Record<string, any>, resumeType: string): string {
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function createResumePrompt(resumeData: any, resumeType: string): string {
   const { personalInfo, summary, experience, education, skills, jobTitle, jobDescription } = resumeData;
   
   let styleInstructions = '';

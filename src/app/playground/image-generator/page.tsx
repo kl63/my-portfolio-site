@@ -177,6 +177,7 @@ export default function ImageGeneratorPage() {
                     placeholder="e.g., A majestic dragon flying over a cyberpunk city at sunset"
                     className="w-full"
                   />
+                  <p className="text-sm text-gray-600 dark:text-gray-400">Click &quot;Generate Image&quot; to create your AI artwork</p>
                   <p className="text-sm text-gray-500 dark:text-gray-400">
                     Describe the image you want to create in detail
                   </p>
@@ -325,7 +326,7 @@ export default function ImageGeneratorPage() {
                       <div className="text-center text-gray-500 dark:text-gray-400">
                         <Image className="h-12 w-12 mx-auto mb-4 opacity-50" />
                         <p>Your generated image will appear here</p>
-                        <p className="text-sm mt-2">Enter a description and click "Generate Image"</p>
+                        <p className="text-sm mt-2">Enter a description and click &quot;Generate Image&quot;</p>
                       </div>
                     </div>
                   )}

@@ -202,7 +202,7 @@ export default function ChatbotPage() {
                   <div className="text-center text-gray-500 dark:text-gray-400 mt-8">
                     <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
                     <p>Start a conversation with your AI assistant!</p>
-                    <p className="text-sm mt-2">Try asking: "What can you help me with?"</p>
+                    <p className="text-sm mt-2">Try asking: &quot;What can you help me with?&quot;</p>
                   </div>
                 )}
                 

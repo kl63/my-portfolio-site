@@ -25,6 +25,7 @@ export default function MemeGeneratorPage() {
   const [topText, setTopText] = useState('');
   const [bottomText, setBottomText] = useState('');
   const [generatedCaption, setGeneratedCaption] = useState('');
+  const [generatedMemeImage, setGeneratedMemeImage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
@@ -99,13 +100,91 @@ export default function MemeGeneratorPage() {
     }
   };
 
+  const generateMemeImage = async () => {
+    console.log('🎨 generateMemeImage called with:', { topText, bottomText, selectedTemplate });
+    
+    if (!topText || !bottomText) {
+      alert('Please enter both top and bottom text first');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await fetch('/api/playground/meme', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          template: selectedTemplate,
+          topText,
+          bottomText,
+          generateImage: true
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to generate meme image');
+      }
+
+      const data = await response.json();
+      console.log('Meme API response:', data);
+      setGeneratedMemeImage(data.imageUrl);
+    } catch (error) {
+      console.error('Error generating meme image:', error);
+      alert('Failed to generate meme image. Please try again.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
   const copyText = () => {
     const memeText = `${topText}\n${bottomText}`;
     navigator.clipboard.writeText(memeText);
   };
 
-  const downloadMeme = () => {
-    // Simple text download - in a real app, you'd generate an actual meme image
+  const downloadMeme = async () => {
+    // If we have a generated meme image, download that
+    if (generatedMemeImage) {
+      try {
+        const filename = `meme-${selectedTemplate}-${Date.now()}.png`;
+        
+        // Use server-side proxy to download the image
+        const response = await fetch('/api/download-image', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            imageUrl: generatedMemeImage,
+            filename: filename
+          }),
+        });
+        
+        if (!response.ok) {
+          throw new Error('Download failed');
+        }
+        
+        // Create blob from response and trigger download
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+        return;
+        
+      } catch (error) {
+        console.error('Error downloading meme image:', error);
+        alert('Failed to download meme image. Please try again.');
+        return;
+      }
+    }
+    
+    // Fallback: download meme text if no image is generated
     const memeContent = `MEME: ${selectedTemplate.toUpperCase()}\n\nTop Text: ${topText}\nBottom Text: ${bottomText}`;
     const element = document.createElement('a');
     const file = new Blob([memeContent], { type: 'text/plain' });
@@ -242,30 +321,50 @@ export default function MemeGeneratorPage() {
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex gap-2">
-                  <Button onClick={generateAICaption} disabled={isLoading} variant="outline" className="flex-1">
+                <div className="space-y-2">
+                  <div className="flex gap-2">
+                    <Button onClick={generateAICaption} disabled={isLoading} variant="outline" className="flex-1">
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Generating...
+                        </>
+                      ) : (
+                        <>
+                          <Smile className="h-4 w-4 mr-2" />
+                          AI Caption
+                        </>
+                      )}
+                    </Button>
+                    <Button onClick={generateCaption} disabled={isLoading} className="flex-1">
+                      {isLoading ? (
+                        <>
+                          <Loader2 className="h-4 w-4 mr-2 animate-spin" />
+                          Creating...
+                        </>
+                      ) : (
+                        <>
+                          <ImageIcon className="h-4 w-4 mr-2" />
+                          Create Meme
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                  <Button 
+                    onClick={generateMemeImage}
+                    disabled={isLoading || !topText || !bottomText} 
+                    className="w-full"
+                    size="lg"
+                  >
                     {isLoading ? (
                       <>
                         <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Generating...
-                      </>
-                    ) : (
-                      <>
-                        <Smile className="h-4 w-4 mr-2" />
-                        AI Caption
-                      </>
-                    )}
-                  </Button>
-                  <Button onClick={generateCaption} disabled={isLoading} className="flex-1">
-                    {isLoading ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Creating...
+                        Generating Meme Image...
                       </>
                     ) : (
                       <>
                         <ImageIcon className="h-4 w-4 mr-2" />
-                        Create Meme
+                        Generate Meme Image
                       </>
                     )}
                   </Button>
@@ -287,12 +386,17 @@ export default function MemeGeneratorPage() {
                     <ImageIcon className="h-5 w-5" />
                     Meme Preview
                   </span>
-                  {(topText || bottomText) && (
+                  {(topText || bottomText || generatedMemeImage) && (
                     <div className="flex gap-2">
                       <Button variant="outline" size="sm" onClick={copyText}>
                         <Copy className="h-4 w-4" />
                       </Button>
-                      <Button variant="outline" size="sm" onClick={downloadMeme}>
+                      <Button 
+                        variant="outline" 
+                        size="sm" 
+                        onClick={downloadMeme}
+                        title={generatedMemeImage ? "Download meme image" : "Download meme text"}
+                      >
                         <Download className="h-4 w-4" />
                       </Button>
                     </div>
@@ -313,7 +417,16 @@ export default function MemeGeneratorPage() {
                     
                     {/* Meme Preview */}
                     <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 text-center space-y-4">
-                      {customImage ? (
+                      {generatedMemeImage ? (
+                        <div className="w-full">
+                          <img
+                            src={generatedMemeImage}
+                            alt={`Generated meme: ${topText} / ${bottomText}`}
+                            className="w-full max-w-md mx-auto rounded-lg shadow-lg"
+                          />
+                          <p className="text-sm text-gray-500 mt-2">AI-Generated Meme</p>
+                        </div>
+                      ) : customImage ? (
                         <img
                           src={customImage}
                           alt="Meme template"
@@ -328,13 +441,13 @@ export default function MemeGeneratorPage() {
                         </div>
                       )}
                       
-                      {topText && (
+                      {!generatedMemeImage && topText && (
                         <div className="text-lg font-bold text-white bg-black bg-opacity-75 px-4 py-2 rounded">
                           {topText}
                         </div>
                       )}
                       
-                      {bottomText && (
+                      {!generatedMemeImage && bottomText && (
                         <div className="text-lg font-bold text-white bg-black bg-opacity-75 px-4 py-2 rounded">
                           {bottomText}
                         </div>

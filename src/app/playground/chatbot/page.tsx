@@ -189,15 +189,15 @@ export default function ChatbotPage() {
           transition={{ duration: 0.5, delay: 0.2 }}
         >
           <Card className="h-[600px] flex flex-col">
-            <CardHeader>
+            <CardHeader className="flex-shrink-0">
               <CardTitle className="flex items-center gap-2">
                 <Bot className="h-5 w-5" />
                 Chat with AI
               </CardTitle>
             </CardHeader>
-            <CardContent className="flex-1 flex flex-col">
+            <CardContent className="flex-1 flex flex-col min-h-0">
               {/* Messages */}
-              <div className="flex-1 overflow-y-auto mb-4 space-y-4 pr-2">
+              <div className="flex-1 overflow-y-auto mb-4 space-y-4 pr-2 min-h-0">
                 {messages.length === 0 && (
                   <div className="text-center text-gray-500 dark:text-gray-400 mt-8">
                     <Bot className="h-12 w-12 mx-auto mb-4 opacity-50" />
@@ -268,7 +268,7 @@ export default function ChatbotPage() {
               </div>
 
               {/* Input */}
-              <div className="flex gap-2">
+              <div className="flex gap-2 flex-shrink-0">
                 <Input
                   value={inputValue}
                   onChange={(e) => setInputValue(e.target.value)}

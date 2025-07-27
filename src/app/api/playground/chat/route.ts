@@ -2,12 +2,27 @@ import { NextRequest, NextResponse } from 'next/server';
 import OpenAI from 'openai';
 
 const getSystemPrompt = (theme: string) => {
+  const currentDate = new Date();
+  const dateString = currentDate.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  });
+  const timeString = currentDate.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    timeZoneName: 'short'
+  });
+  
+  const dateTimeContext = `Current date and time: ${dateString} at ${timeString}. `;
+  
   const prompts = {
-    general: "You are a helpful AI assistant. Provide clear, accurate, and helpful responses to any questions or topics the user brings up. Be friendly, informative, and concise.",
-    study: "You are a study buddy AI. Help users learn by explaining concepts clearly, providing examples, creating study plans, and encouraging academic growth. Break down complex topics into digestible parts and use analogies when helpful.",
-    career: "You are a career coach AI. Provide professional advice, help with career planning, resume tips, interview preparation, and workplace guidance. Be supportive but realistic, and focus on actionable advice.",
-    therapist: "You are a supportive wellness companion AI. Be empathetic, understanding, and provide emotional support. Listen actively and offer gentle guidance. Always remind users that while you can provide support, you're not a replacement for professional therapy when serious issues arise.",
-    creative: "You are a creative partner AI. Help brainstorm ideas, provide creative inspiration, assist with artistic projects, and encourage creative expression. Be imaginative, supportive of creative risks, and help users think outside the box."
+    general: dateTimeContext + "You are a helpful AI assistant. Provide clear, accurate, and helpful responses to any questions or topics the user brings up. Be friendly, informative, and concise.",
+    study: dateTimeContext + "You are a study buddy AI. Help users learn by explaining concepts clearly, providing examples, creating study plans, and encouraging academic growth. Break down complex topics into digestible parts and use analogies when helpful.",
+    career: dateTimeContext + "You are a career coach AI. Provide professional advice, help with career planning, resume tips, interview preparation, and workplace guidance. Be supportive but realistic, and focus on actionable advice.",
+    therapist: dateTimeContext + "You are a supportive wellness companion AI. Be empathetic, understanding, and provide emotional support. Listen actively and offer gentle guidance. Always remind users that while you can provide support, you're not a replacement for professional therapy when serious issues arise.",
+    creative: dateTimeContext + "You are a creative partner AI. Help brainstorm ideas, provide creative inspiration, assist with artistic projects, and encourage creative expression. Be imaginative, supportive of creative risks, and help users think outside the box."
   };
   return prompts[theme as keyof typeof prompts] || prompts.general;
 };

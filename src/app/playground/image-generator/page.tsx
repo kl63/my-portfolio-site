@@ -75,15 +75,43 @@ export default function ImageGeneratorPage() {
     }
   };
 
-  const downloadImage = () => {
+  const downloadImage = async () => {
     if (!generatedImage) return;
     
-    const link = document.createElement('a');
-    link.href = generatedImage;
-    link.download = `ai-generated-${prompt.replace(/\s+/g, '-').toLowerCase()}.png`;
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    try {
+      const filename = `ai-generated-${prompt.replace(/\s+/g, '-').toLowerCase()}.png`;
+      
+      // Use server-side proxy to download the image
+      const response = await fetch('/api/download-image', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          imageUrl: generatedImage,
+          filename: filename
+        }),
+      });
+      
+      if (!response.ok) {
+        throw new Error('Download failed');
+      }
+      
+      // Create blob from response and trigger download
+      const blob = await response.blob();
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = filename;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+      
+    } catch (error) {
+      console.error('Error downloading image:', error);
+      alert('Failed to download image. Please try again.');
+    }
   };
 
   const copyPrompt = () => {

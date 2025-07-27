@@ -3,7 +3,63 @@ import OpenAI from 'openai';
 
 export async function POST(request: NextRequest) {
   try {
-    const { template, topText, bottomText, generateCaption } = await request.json();
+    const { template, topText, bottomText, generateCaption, generateImage } = await request.json();
+    
+    console.log('Meme API called with:', { template, topText, bottomText, generateCaption, generateImage });
+    console.log('generateImage type:', typeof generateImage, 'value:', generateImage);
+    console.log('topText:', topText, 'bottomText:', bottomText);
+
+    // If generating image, use DALL-E to create meme
+    if (generateImage === true && topText && bottomText) {
+      console.log('✅ Entering image generation branch...');
+      if (!process.env.OPENAI_API_KEY) {
+        return NextResponse.json(
+          { error: 'OpenAI API key is not configured' },
+          { status: 500 }
+        );
+      }
+
+      // Initialize OpenAI client at runtime
+      const openai = new OpenAI({
+        apiKey: process.env.OPENAI_API_KEY,
+      });
+
+      // Create a prompt for DALL-E to generate a meme image
+      const memePrompt = `Create a meme image with the text "${topText}" at the top and "${bottomText}" at the bottom. The image should be in classic meme format with bold white text with black outline, suitable for the ${template} meme template style. Make it look like a professional internet meme.`;
+
+      try {
+        const response = await openai.images.generate({
+          model: "dall-e-3",
+          prompt: memePrompt,
+          n: 1,
+          size: "1024x1024",
+          quality: "standard",
+          style: "vivid"
+        });
+
+        const imageUrl = response.data?.[0]?.url;
+
+        if (!imageUrl) {
+          return NextResponse.json(
+            { error: 'Failed to generate meme image' },
+            { status: 500 }
+          );
+        }
+
+        return NextResponse.json({ 
+          imageUrl,
+          topText,
+          bottomText,
+          template
+        });
+      } catch (error) {
+        console.error('Error generating meme image:', error);
+        return NextResponse.json(
+          { error: 'Failed to generate meme image. Please try again.' },
+          { status: 500 }
+        );
+      }
+    }
 
     // Fallback meme captions if no API key
     if (!process.env.OPENAI_API_KEY) {

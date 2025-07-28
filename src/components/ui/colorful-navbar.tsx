@@ -79,59 +79,88 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
           </Link>
 
           {/* Desktop Navigation */}
-          <motion.nav 
-            className="hidden md:flex items-center space-x-1"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1, transition: { staggerChildren: 0.1 } }}
-          >
-            {navItems.map((item, index) => {
-              const isActive = item.href === '/playground' 
-                ? pathname.startsWith('/playground')
-                : pathname === item.href
-              
-              return (
-                <motion.div
-                  key={item.name}
-                  className="relative flex items-center gap-3 px-6 py-2 text-base font-medium transition-all"
-                  variants={{
-                    hidden: { opacity: 0, y: -10 },
-                    visible: {
-                      opacity: 1,
-                      y: 0,
-                      transition: { duration: 0.3, delay: index * 0.1 },
-                    },
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
-                >
-                  <Link 
-                    key={item.name} 
-                    href={item.href} 
-                    className={`flex items-center gap-3 w-full relative ${isActive 
-                      ? 'font-bold'
-                      : 'text-foreground hover:text-purple-600'}`}
+          <div className="hidden md:flex items-center space-x-4">
+            <motion.nav 
+              className="flex items-center space-x-1"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1, transition: { staggerChildren: 0.1 } }}
+            >
+              {navItems.map((item, index) => {
+                const isActive = item.href === '/playground' 
+                  ? pathname.startsWith('/playground')
+                  : pathname === item.href
+                
+                return (
+                  <motion.div
+                    key={item.name}
+                    className="relative flex items-center gap-3 px-6 py-2 text-base font-medium transition-all"
+                    variants={{
+                      hidden: { opacity: 0, y: -10 },
+                      visible: {
+                        opacity: 1,
+                        y: 0,
+                        transition: { duration: 0.3, delay: index * 0.1 },
+                      },
+                    }}
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
                   >
-                    <span className={`${isActive 
-                      ? 'text-purple-600'
-                      : 'text-foreground'}`}>
-                      {item.icon}
-                    </span>
-                    <span className={`ml-1 text-base ${isActive 
-                      ? 'bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600'
-                      : ''}`}>
-                      {item.name}
-                    </span>
-                    {isActive && (
-                      <motion.span 
-                        className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600"
-                        layoutId="navbar-active-underline"
-                      />
-                    )}
-                  </Link>
-                </motion.div>
-              )
-            })}
-          </motion.nav>
+                    <Link 
+                      key={item.name} 
+                      href={item.href} 
+                      className={`flex items-center gap-3 w-full relative ${isActive 
+                        ? 'font-bold'
+                        : 'text-foreground hover:text-purple-600'}`}
+                    >
+                      <span className={`${isActive 
+                        ? 'text-purple-600'
+                        : 'text-foreground'}`}>
+                        {item.icon}
+                      </span>
+                      <span className={`ml-1 text-base ${isActive 
+                        ? 'bg-clip-text text-transparent bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600'
+                        : ''}`}>
+                        {item.name}
+                      </span>
+                      {isActive && (
+                        <motion.span 
+                          className="absolute -bottom-1 left-0 right-0 h-0.5 bg-gradient-to-r from-purple-600 via-pink-600 to-blue-600"
+                          layoutId="navbar-active-underline"
+                        />
+                      )}
+                    </Link>
+                  </motion.div>
+                )
+              })}
+            </motion.nav>
+            
+            {/* GitHub Actions Status Badge */}
+            <motion.div
+              className="flex items-center"
+              initial={{ opacity: 0, x: 20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ delay: 0.5 }}
+            >
+              <a
+                href="https://github.com/kl63/my-portfolio-site/actions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-opacity hover:opacity-80 rounded-md overflow-hidden"
+                title="View Site Status & GitHub Actions"
+              >
+                <img
+                  src="https://img.shields.io/badge/Site%20Status-Online-brightgreen?style=flat&logo=github"
+                  alt="Site Status"
+                  className="h-5 w-auto"
+                  onError={(e) => {
+                    // Fallback to basic badge if shields.io fails
+                    const target = e.target as HTMLImageElement;
+                    target.src = 'https://img.shields.io/badge/Site-Status-blue';
+                  }}
+                />
+              </a>
+            </motion.div>
+          </div>
 
           {/* Mobile Menu Button */}
           <motion.button
@@ -213,6 +242,34 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                       </motion.div>
                     )
                   })}
+                  
+                  {/* GitHub Actions Status Badge - Mobile */}
+                  <motion.div
+                    className="px-6 py-3 border-t border-border mt-4 pt-4"
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.3 }}
+                  >
+                    <div className="text-sm text-muted-foreground mb-2">Build Status</div>
+                    <a
+                      href="https://github.com/kl63/my-portfolio-site/actions"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block transition-opacity hover:opacity-80"
+                      onClick={() => setIsOpen(false)}
+                    >
+                      <img
+                        src="https://img.shields.io/badge/Site%20Status-Online-brightgreen?style=flat&logo=github"
+                        alt="Site Status"
+                        className="h-5 w-auto"
+                        onError={(e) => {
+                          // Fallback to basic badge if shields.io fails
+                          const target = e.target as HTMLImageElement;
+                          target.src = 'https://img.shields.io/badge/Site-Status-blue';
+                        }}
+                      />
+                    </a>
+                  </motion.div>
                 </div>
                 
                 <div className="px-6 py-4 border-t border-border">

@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button'
 import { ArrowRight, ExternalLink, Github } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
+import { PROJECTS } from '@/components/ui/portfolio-projects'
 
 interface Project {
   id: string
@@ -25,48 +26,16 @@ interface FeaturedProjectsProps {
   subtitle?: string
 }
 
-// Sample projects data for the featured projects component
-const sampleProjects: Project[] = [
-  {
-    id: '1',
-    title: 'E-Commerce Platform',
-    description: 'A full-stack e-commerce solution with modern UI/UX, payment integration, and admin dashboard.',
-    image: 'https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop',
-    technologies: ['React', 'Node.js', 'MongoDB', 'Stripe'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com'
-  },
-  {
-    id: '2',
-    title: 'Task Management App',
-    description: 'Collaborative task management tool with real-time updates, team collaboration, and progress tracking.',
-    image: 'https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=600&h=400&fit=crop',
-    technologies: ['Next.js', 'TypeScript', 'Prisma', 'PostgreSQL'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com'
-  },
-  {
-    id: '3',
-    title: 'AI Content Generator',
-    description: 'AI-powered content generator with customizable templates, multilingual support, and export options.',
-    image: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=400&fit=crop',
-    technologies: ['OpenAI API', 'React', 'Express', 'Redis'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com'
-  },
-  {
-    id: '4',
-    title: 'Portfolio Website',
-    description: 'Modern portfolio website with animations, dark mode, and responsive design.',
-    image: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&h=400&fit=crop',
-    technologies: ['Next.js', 'Tailwind CSS', 'Framer Motion'],
-    liveUrl: 'https://example.com',
-    githubUrl: 'https://github.com'
-  }
+// Featured projects - curated selection from the main PROJECTS array
+const featuredProjects: Project[] = [
+  PROJECTS[0], // Personal Portfolio
+  PROJECTS[4], // SmartContent Flow - LinkedIn AI Content Generator  
+  PROJECTS[2], // Task Management App
+  PROJECTS[1], // FastAPI Application
 ];
 
 const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
-  projects = sampleProjects,
+  projects = featuredProjects,
   onViewAllClick,
   title = "Featured Projects",
   subtitle = "Explore some of my recent work"
@@ -107,7 +76,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
             {projects.map((project, index) => (
               <Card 
                 key={project.id}
-                className="min-w-[300px] md:min-w-[400px] flex-shrink-0 overflow-hidden snap-start border border-border/40 hover:border-primary/20 transition-all duration-300 group"
+                className="min-w-[200px] md:min-w-[220px] lg:min-w-[240px] flex-shrink-0 overflow-hidden snap-start border border-border/40 hover:border-primary/20 transition-all duration-300 group"
               >
                 <div className="relative h-48 w-full overflow-hidden">
                   <Image 
@@ -119,22 +88,7 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                     priority={index < 2} /* Prioritize loading first 2 images */
                     loading={index < 2 ? "eager" : "lazy"}
                   />
-                  <div className="absolute top-2 right-2 flex space-x-2">
-                    {project.liveUrl && (
-                      <Link href={project.liveUrl} target="_blank" rel="noopener noreferrer">
-                        <Button size="icon" variant="secondary" className="h-8 w-8 opacity-80 hover:opacity-100">
-                          <ExternalLink className="h-4 w-4" />
-                        </Button>
-                      </Link>
-                    )}
-                    {project.githubUrl && (
-                      <Link href={project.githubUrl} target="_blank" rel="noopener noreferrer">
-                        <Button size="icon" variant="secondary" className="h-8 w-8 opacity-80 hover:opacity-100">
-                          <Github className="h-4 w-4" />
-                        </Button>
-                      </Link>
-                    )}
-                  </div>
+
                 </div>
                 
                 <CardContent className="p-5 bg-gradient-to-br from-background to-background/70">
@@ -145,8 +99,8 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                     {project.description}
                   </p>
                   
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
+                  <div className="flex flex-wrap gap-2 mb-4">
+                    {project.technologies.map((tech: string) => (
                       <Badge 
                         key={tech} 
                         variant="secondary"
@@ -155,6 +109,31 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
                         {tech}
                       </Badge>
                     ))}
+                  </div>
+                  
+                  {/* Action Buttons */}
+                  <div className="flex flex-col gap-2">
+                    {project.liveUrl && (
+                      <Button 
+                        size="sm" 
+                        className="w-full gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                        onClick={() => window.open(project.liveUrl, '_blank', 'noopener,noreferrer')}
+                      >
+                        <ExternalLink className="w-4 h-4" />
+                        Live Demo
+                      </Button>
+                    )}
+                    {project.githubUrl && (
+                      <Button 
+                        size="sm" 
+                        variant="outline" 
+                        className="w-full gap-2 border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                        onClick={() => window.open(project.githubUrl, '_blank', 'noopener,noreferrer')}
+                      >
+                        <Github className="w-4 h-4" />
+                        View Code
+                      </Button>
+                    )}
                   </div>
                 </CardContent>
               </Card>

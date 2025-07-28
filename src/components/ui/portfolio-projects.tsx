@@ -155,82 +155,6 @@ const FlipCardBack = React.memo(
 )
 FlipCardBack.displayName = "FlipCardBack"
 
-// Hover Reveal Card
-interface CardHoverRevealProps extends React.HTMLAttributes<HTMLDivElement> {
-  defaultOpen?: boolean
-}
-
-interface CardHoverRevealContextValue {
-  isOpen: boolean
-}
-
-const CardHoverRevealContext = React.createContext<CardHoverRevealContextValue | undefined>(
-  undefined
-)
-
-function useCardHoverRevealContext() {
-  const context = React.useContext(CardHoverRevealContext)
-  if (!context) {
-    throw new Error("useCardHoverRevealContext must be used within a CardHoverReveal")
-  }
-  return context
-}
-
-function CardHoverReveal({
-  children,
-  className,
-  defaultOpen = false,
-  ...props
-}: CardHoverRevealProps) {
-  const [isOpen, setIsOpen] = React.useState(defaultOpen)
-  
-  const contextValue = React.useMemo(() => ({ isOpen }), [isOpen])
-  
-  return (
-    <CardHoverRevealContext.Provider value={contextValue}>
-      <div 
-        className={cn("group relative overflow-hidden rounded-lg", className)} 
-        onMouseEnter={() => setIsOpen(true)}
-        onMouseLeave={() => setIsOpen(false)}
-        {...props}
-      >
-        {children}
-      </div>
-    </CardHoverRevealContext.Provider>
-  )
-}
-
-interface CardHoverRevealContentProps extends Omit<HTMLMotionProps<"div">, "animate" | "initial"> {
-  children: React.ReactNode
-  className?: string
-}
-
-function CardHoverRevealContent({ 
-  children, 
-  className,
-  ...props
-}: CardHoverRevealContentProps) {
-  const { isOpen } = useCardHoverRevealContext()
-  
-  return (
-    <motion.div 
-      className={cn(
-        "absolute inset-0 bg-black/80 backdrop-blur-sm p-6 flex flex-col",
-        className
-      )}
-      initial={{ opacity: 0 }}
-      animate={{ 
-        opacity: isOpen ? 1 : 0,
-        y: isOpen ? 0 : 20
-      }}
-      transition={{ duration: 0.3 }}
-      {...props}
-    >
-      {children}
-    </motion.div>
-  )
-}
-
 // Project type
 interface Project {
   id: string
@@ -264,72 +188,7 @@ interface ProjectItemProps {
   onClick?: () => void;
 }
 
-// Projects data
-export const PROJECTS: Project[] = [
-  {
-    id: "1",
-    title: "Personal Portfolio",
-    description: "A modern portfolio site built with Next.js and Tailwind CSS.",
-    image: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=800",
-    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
-    category: "Web",
-    liveUrl: "https://example.com/portfolio",
-    githubUrl: "https://github.com/example/portfolio",
-  },
-  {
-    id: "2",
-    title: "E-Commerce Platform",
-    description: "A full-featured online store with product management and payment processing.",
-    image: "https://images.unsplash.com/photo-1472851294608-062f824d29cc?w=800",
-    technologies: ["React", "Node.js", "MongoDB", "Stripe"],
-    category: "Web",
-    liveUrl: "https://example.com/ecommerce",
-    githubUrl: "https://github.com/example/ecommerce",
-  },
-  {
-    id: "3",
-    title: "Task Management App",
-    description: "An intuitive task manager with drag-and-drop functionality and team collaboration features.",
-    image: "https://images.unsplash.com/photo-1484480974693-6ca0a78fb36b?w=800",
-    technologies: ["React", "Redux", "Firebase", "Material UI"],
-    category: "App",
-    liveUrl: "https://example.com/task-app",
-    githubUrl: "https://github.com/example/task-app",
-  },
-  {
-    id: "4",
-    title: "Weather Dashboard",
-    description: "Real-time weather forecasting with interactive maps and location-based services.",
-    image: "https://images.unsplash.com/photo-1534088568595-a066f410bcda?w=800",
-    technologies: ["Vue.js", "Weather API", "Leaflet", "D3.js"],
-    category: "Web",
-    liveUrl: "https://example.com/weather",
-    githubUrl: "https://github.com/example/weather",
-  },
-  {
-    id: "5",
-    title: "Social Media Dashboard",
-    description: "A social media management platform with analytics and scheduling capabilities.",
-    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
-    technologies: ["Angular", "Express", "PostgreSQL", "Chart.js"],
-    category: "Web",
-    liveUrl: "https://example.com/social",
-    githubUrl: "https://github.com/example/social",
-  },
-  {
-    id: "6",
-    title: "Fitness Tracker",
-    description: "A mobile app for tracking workouts, nutrition, and fitness goals.",
-    image: "https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=800",
-    technologies: ["React Native", "Redux", "Firebase", "Expo"],
-    category: "App",
-    liveUrl: "https://example.com/fitness",
-    githubUrl: "https://github.com/example/fitness",
-  },
-]
-
-// Get unique categories
-const ALL_CATEGORIES = ["All", ...Array.from(new Set(PROJECTS.map((p) => p.category)))]
+// Projects data will be defined below
 
 interface PortfolioProjectsProps {
   className?: string
@@ -393,7 +252,7 @@ function PortfolioProjects({
           {filteredProjects.map((project, index) => (
             <motion.div
               key={project.id}
-              className="h-[350px] overflow-hidden rounded-lg"
+              className="bg-card rounded-lg border shadow-sm hover:shadow-md transition-shadow duration-300 overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={isLoaded ? { opacity: 1, y: 0 } : {}}
               transition={{ 
@@ -406,56 +265,69 @@ function PortfolioProjects({
               {project.image.endsWith(".mp4") ? (
                 <video
                   src={project.image}
-                  className="h-full w-full object-cover"
+                  className="w-full h-48 object-cover"
                   autoPlay
                   muted
                   loop
                 />
               ) : (
-                <CardHoverReveal>
+                <div className="relative overflow-hidden">
                   <Image 
                     src={project.image} 
                     alt={project.title} 
                     width={600}
-                    height={400}
-                    className="h-64 w-full object-cover rounded-t-lg transition-transform duration-500 group-hover:scale-105" 
+                    height={300}
+                    className="w-full h-48 object-cover transition-transform duration-500 hover:scale-105" 
                     priority={index < 3} /* Prioritize loading first 3 images */
                     loading={index < 3 ? "eager" : "lazy"}
                     sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                   />
-                  <CardHoverRevealContent>
-                    <div className="flex flex-col justify-between h-full text-white">
-                      <h3 className="text-xl font-semibold tracking-tight text-foreground">
-                        {project.title}
-                      </h3>
-                      <p className="text-sm text-muted-foreground">
-                        {project.description}
-                      </p>
-                      <div className="flex flex-wrap gap-2">
-                        {project.technologies.map((tech) => (
-                          <Badge key={tech} variant="secondary" className="text-xs">
-                            {tech}
-                          </Badge>
-                        ))}
-                      </div>
-                      <div className="flex gap-3 pt-2">
-                        {project.liveUrl && (
-                          <Button size="sm" className="gap-2">
-                            <ExternalLink className="w-4 h-4" />
-                            Live Demo
-                          </Button>
-                        )}
-                        {project.githubUrl && (
-                          <Button size="sm" variant="outline" className="gap-2">
-                            <Github className="w-4 h-4" />
-                            Code
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </CardHoverRevealContent>
-                </CardHoverReveal>
+                </div>
               )}
+              
+              {/* Card Content - Always Visible */}
+              <div className="p-6">
+                <h3 className="text-xl font-bold tracking-tight text-foreground mb-3">
+                  {project.title}
+                </h3>
+                <p className="text-sm text-muted-foreground leading-relaxed mb-4">
+                  {project.description}
+                </p>
+                
+                {/* Technology Badges */}
+                <div className="flex flex-wrap gap-2 mb-4">
+                  {project.technologies.map((tech) => (
+                    <Badge key={tech} variant="secondary" className="text-xs">
+                      {tech}
+                    </Badge>
+                  ))}
+                </div>
+                
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-2">
+                  {project.liveUrl && (
+                    <Button 
+                      size="sm" 
+                      className="w-full gap-2 bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 text-white shadow-lg hover:shadow-xl transition-all duration-300"
+                      onClick={() => window.open(project.liveUrl, '_blank', 'noopener,noreferrer')}
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Live Demo
+                    </Button>
+                  )}
+                  {project.githubUrl && (
+                    <Button 
+                      size="sm" 
+                      variant="outline" 
+                      className="w-full gap-2 border-gray-300 text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:text-gray-300 dark:hover:bg-gray-800"
+                      onClick={() => window.open(project.githubUrl, '_blank', 'noopener,noreferrer')}
+                    >
+                      <Github className="w-4 h-4" />
+                      View Code
+                    </Button>
+                  )}
+                </div>
+              </div>
             </motion.div>
           ))}
         </motion.div>
@@ -467,3 +339,75 @@ function PortfolioProjects({
 export default function PortfolioProjectsDemo() {
   return <PortfolioProjects />
 }
+export const PROJECTS: Project[] = [
+  {
+    id: "1",
+    title: "Personal Portfolio",
+    description: "A modern, responsive portfolio website showcasing projects and skills with interactive animations and a built-in AI playground.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "GitHub Actions", "DigitalOcean"],
+    category: "Web",
+    liveUrl: "https://www.kevinlinportfolio.com/",
+    githubUrl: "https://github.com/kl63/my-portfolio-site",
+  },
+  {
+    id: "2",
+    title: "FastAPI Application",
+    description: "A high-performance REST API built with FastAPI, featuring PostgreSQL database integration and comprehensive API documentation.",
+    image: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?w=800",
+    technologies: ["FastAPI", "PostgreSQL", "PgAdmin", "GitHub Actions", "DigitalOcean"],
+    category: "Web",
+    liveUrl: "https://fastapi.kevinlinportfolio.com/docs",
+    githubUrl: "https://github.com/kl63/fastapi_app",
+  },
+  {
+    id: "3",
+    title: "Task Management App",
+    description: "A full-stack .NET task management application with user authentication, CRUD operations, and responsive design.",
+    image: "https://images.unsplash.com/photo-1611224923853-80b023f02d71?w=800",
+    technologies: ["ASP.NET Core", "Entity Framework", "SQL Server", "Bootstrap"],
+    category: "App",
+    liveUrl: "http://todo.kevinlinportfolio.com/",
+    githubUrl: "https://github.com/kl63/DotNet-ToDo-App",
+  },
+  {
+    id: "4",
+    title: "GitHub Code Review MCP",
+    description: "A Model Context Protocol server that integrates with Claude AI to provide intelligent GitHub code review capabilities and repository analysis.",
+    image: "https://images.unsplash.com/photo-1556075798-4825dfaaf498?w=800",
+    technologies: ["Python", "MCP", "Claude AI", "GitHub API"],
+    category: "Tool",
+    githubUrl: "https://github.com/kl63/Mcp-Server-Demo",
+  },
+  {
+    id: "5",
+    title: "SmartContent Flow - LinkedIn AI Content Generator",
+    description: "An AI-powered LinkedIn content creation platform with voice-to-text input, automated posting via Make.com, and intelligent content optimization.",
+    image: "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800",
+    technologies: ["Next.js", "TypeScript", "Tailwind CSS", "OpenAI API", "Shadcn UI", "Make.com API", "Web Speech API"],
+    category: "Web",
+    liveUrl: "https://smartcontent-flow.vercel.app/",
+    githubUrl: "https://github.com/kl63/smartcontent-flow",
+  },
+  {
+    id: "6",
+    title: "RAG Demo with LangChain and OpenAI",
+    description: "A Retrieval-Augmented Generation application demonstrating document processing, vector embeddings, and intelligent question-answering capabilities.",
+    image: "https://images.unsplash.com/photo-1677442136019-21780ecad995?w=800",
+    technologies: ["LangChain", "OpenAI", "JavaScript", "Node.js", "Vector DB"],
+    category: "AI",
+    githubUrl: "https://github.com/kl63/RagTranslator",
+  },
+  {
+    id: "7",
+    title: "CalcMate - Swift Calculator",
+    description: "A native iOS calculator app built with Swift, featuring a clean UI design, comprehensive testing suite, and CI/CD pipeline.",
+    image: "https://images.unsplash.com/photo-1512941937669-90a1b58e7e9c?w=800",
+    technologies: ["Swift", "XCTest", "Figma", "GitHub Actions", "iOS"],
+    category: "App",
+    githubUrl: "https://github.com/kl63/CalcMate",
+  },
+]
+
+// Get unique categories
+const ALL_CATEGORIES = ["All", ...Array.from(new Set(PROJECTS.map((p: Project) => p.category)))]

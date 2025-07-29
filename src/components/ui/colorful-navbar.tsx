@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState, useEffect } from 'react'
-import { Menu, X, Home, FolderOpen, Award, Mail, Sparkles } from 'lucide-react'
+import { Home, FolderOpen, Award, Mail, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
@@ -165,11 +165,46 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
           {/* Mobile Menu Button */}
           <motion.button
             onClick={toggleMenu}
-            className="flex md:hidden p-2 rounded-full bg-muted/30 hover:bg-muted/50 transition-colors"
+            className={`flex md:hidden items-center justify-center p-3 rounded-full transition-all duration-300 relative z-50 ${
+              scrolled 
+                ? 'bg-muted/70 hover:bg-muted/90 text-foreground' 
+                : 'bg-white/90 hover:bg-white text-gray-900 shadow-lg border border-gray-200'
+            }`}
             whileTap={{ scale: 0.9 }}
             aria-label={isOpen ? "Close menu" : "Open menu"}
+            style={{ minWidth: '48px', minHeight: '48px' }}
           >
-            {isOpen ? <X size={20} /> : <Menu size={20} />}
+            {isOpen ? (
+              // Close (X) icon
+              <svg 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+                className="text-current"
+              >
+                <path d="M18 6L6 18M6 6l12 12" />
+              </svg>
+            ) : (
+              // Hamburger menu icon
+              <svg 
+                width="24" 
+                height="24" 
+                viewBox="0 0 24 24" 
+                fill="none" 
+                stroke="currentColor" 
+                strokeWidth="2" 
+                strokeLinecap="round" 
+                strokeLinejoin="round"
+                className="text-current"
+              >
+                <path d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            )}
           </motion.button>
         </div>
       </header>
@@ -208,7 +243,18 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                     className="p-2 rounded-full hover:bg-muted/50 transition-colors"
                     whileTap={{ scale: 0.9 }}
                   >
-                    <X size={20} />
+                    <svg 
+                      width="20" 
+                      height="20" 
+                      viewBox="0 0 24 24" 
+                      fill="none" 
+                      stroke="currentColor" 
+                      strokeWidth="2" 
+                      strokeLinecap="round" 
+                      strokeLinejoin="round"
+                    >
+                      <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
                   </motion.button>
                 </div>
 

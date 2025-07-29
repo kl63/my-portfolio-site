@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import { Github, Linkedin, Twitter, Mail, Phone, MapPin, Heart, Home, FolderOpen, Award } from 'lucide-react';
+import { Github, Linkedin, Mail,  MapPin,  Home, FolderOpen, Award } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 
@@ -50,14 +50,12 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
     }
   ],
   socialLinks = [
-    { icon: <Github className="h-5 w-5" />, href: "https://github.com/kevinlin", label: "GitHub" },
-    { icon: <Linkedin className="h-5 w-5" />, href: "https://linkedin.com/in/kevinlin", label: "LinkedIn" },
-    { icon: <Twitter className="h-5 w-5" />, href: "https://twitter.com/kevinlin", label: "Twitter" },
+    { icon: <Github className="h-5 w-5" />, href: "https://github.com/kl63", label: "GitHub" },
+    { icon: <Linkedin className="h-5 w-5" />, href: "https://linkedin.com/in/linkevin19", label: "LinkedIn" },
   ],
   contactInfo = [
-    { icon: <Mail className="h-5 w-5" />, label: "Email", value: "kevin.lin@example.com", href: "mailto:kevin.lin@example.com" },
-    { icon: <Phone className="h-5 w-5" />, label: "Phone", value: "+1 (123) 456-7890", href: "tel:+11234567890" },
-    { icon: <MapPin className="h-5 w-5" />, label: "Location", value: "New York, NY", href: undefined },
+    { icon: <Mail className="h-5 w-5" />, label: "Email", value: "lin.kevin.1923@gmail.com", href: "mailto:lin.kevin.1923@gmail.com" },
+    { icon: <MapPin className="h-5 w-5" />, label: "Location", value: "Newark, NJ", href: undefined },
   ],
   companyName = "Kevin Lin",
   description = "Software engineer and designer specializing in creating beautiful, functional, and user-friendly applications."
@@ -228,11 +226,7 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
               <span>© {new Date().getFullYear()} {companyName}. All rights reserved.</span>
             </div>
-            <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <span>Made with</span>
-              <Heart className="w-4 h-4 text-pink-500 fill-pink-500" />
-              <span>using Next.js & Tailwind CSS</span>
-            </div>
+            
           </div>
         </motion.div>
       </div>

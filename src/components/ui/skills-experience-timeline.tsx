@@ -424,8 +424,8 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 md:gap-16">
           {/* Skills Section */}
           <div>
-            <div className="flex justify-between items-center mb-8">
-              <h3 className="text-2xl font-bold">Technical Skills</h3>
+            <div className="mb-8">
+              <h3 className="text-2xl font-bold mb-4">Technical Skills</h3>
               <div className="flex flex-wrap gap-2">
                 {ALL_CATEGORIES.map((category) => (
                   <button
@@ -447,7 +447,7 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
             <LayoutGroup>
               <motion.div
                 layout
-                className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-6"
+                className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-6"
               >
                 {filteredSkills.map((skill) => (
                   <motion.div
@@ -457,21 +457,23 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
                     animate={{ opacity: 1, y: 0 }}
                     exit={{ opacity: 0, y: -20 }}
                     transition={{ duration: 0.3 }}
-                    className="flex items-center gap-4 p-4 rounded-lg border bg-card hover:bg-card/80 transition-colors"
+                    className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 rounded-lg border bg-card hover:bg-card/80 transition-colors"
                   >
-                    <div className="p-2 rounded-full bg-primary/10 text-primary">
+                    <div className="p-2 rounded-full bg-primary/10 text-primary flex-shrink-0">
                       {skill.icon}
                     </div>
-                    <div className="flex-1 min-w-0">
-                      <div className="flex justify-between items-center mb-2">
-                        <p className="font-medium truncate">{skill.name}</p>
+                    <div className="flex-1 min-w-0 w-full">
+                      <div className="flex justify-between items-center gap-2">
+                        <p className="font-medium text-sm sm:text-base leading-tight">{skill.name}</p>
                         {isClient && (
-                          <CircleProgress
-                            value={skill.level}
-                            maxValue={skill.maxLevel}
-                            size={36}
-                            strokeWidth={3}
-                          />
+                          <div className="flex-shrink-0">
+                            <CircleProgress
+                              value={skill.level}
+                              maxValue={skill.maxLevel}
+                              size={32}
+                              strokeWidth={3}
+                            />
+                          </div>
                         )}
                       </div>
                     </div>
@@ -494,32 +496,33 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
                 className="mb-6"
               >
                 <div className="space-y-4">
-                  <div className="space-y-1">
-                    <div className="flex items-center justify-between">
-                      <h3 className="text-lg font-semibold">{experience.position}</h3>
+                  <div className="space-y-2">
+                    <div className="flex items-start justify-between gap-2">
+                      <h3 className="text-lg font-semibold leading-tight">{experience.position}</h3>
                       {experience.url && (
                         <a
                           href={experience.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="text-primary hover:text-primary/80"
+                          className="text-primary hover:text-primary/80 flex-shrink-0 mt-1"
                         >
                           <ExternalLink className="h-4 w-4" />
                         </a>
                       )}
                     </div>
-                    <div className="flex items-center text-sm text-muted-foreground gap-2">
-                      <span>{experience.company}</span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <Calendar className="h-3.5 w-3.5" />
-                        {experience.duration}
-                      </span>
-                      <span>•</span>
-                      <span className="flex items-center gap-1">
-                        <MapPin className="h-3.5 w-3.5" />
-                        {experience.location}
-                      </span>
+                    <div className="text-sm text-muted-foreground space-y-1">
+                      <div className="font-medium">{experience.company}</div>
+                      <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
+                        <span className="flex items-center gap-1">
+                          <Calendar className="h-3.5 w-3.5" />
+                          {experience.duration}
+                        </span>
+                        <span className="hidden sm:inline">•</span>
+                        <span className="flex items-center gap-1">
+                          <MapPin className="h-3.5 w-3.5" />
+                          {experience.location}
+                        </span>
+                      </div>
                     </div>
                   </div>
 
@@ -528,12 +531,12 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
                   </p>
 
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Key Technologies</h4>
-                    <div className="flex flex-wrap gap-2">
+                    <h4 className="font-semibold text-foreground mb-2 text-sm">Key Technologies</h4>
+                    <div className="flex flex-wrap gap-1.5">
                       {experience.technologies.map((tech) => (
                         <span
                           key={tech}
-                          className="px-3 py-1 bg-primary/10 text-primary text-sm rounded-full"
+                          className="px-2.5 py-1 bg-primary/10 text-primary text-xs sm:text-sm rounded-full"
                         >
                           {tech}
                         </span>
@@ -542,12 +545,12 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
                   </div>
 
                   <div>
-                    <h4 className="font-semibold text-foreground mb-2">Achievements</h4>
-                    <ul className="space-y-1">
+                    <h4 className="font-semibold text-foreground mb-2 text-sm">Achievements</h4>
+                    <ul className="space-y-1.5">
                       {experience.achievements.map((achievement, idx) => (
-                        <li key={idx} className="text-sm text-muted-foreground flex items-start space-x-2">
-                          <span className="text-primary mt-1">•</span>
-                          <span>{achievement}</span>
+                        <li key={idx} className="text-xs sm:text-sm text-muted-foreground flex items-start space-x-2">
+                          <span className="text-primary mt-1 flex-shrink-0">•</span>
+                          <span className="leading-relaxed">{achievement}</span>
                         </li>
                       ))}
                     </ul>

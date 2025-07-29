@@ -1,6 +1,7 @@
 import DeveloperPortfolioHero from "@/components/ui/developer-portfolio-hero"
 import FeaturedProjects from "@/components/ui/featured-projects"
 import SkillsShowcase from "@/components/ui/skills-showcase"
+import AIPlaygroundPopup from "@/components/ui/ai-playground-popup"
 
 export default function Home() {
   return (
@@ -21,6 +22,9 @@ export default function Home() {
           />
         </div>
       </section>
+      
+      {/* AI Playground Popup */}
+      <AIPlaygroundPopup delay={3000} />
       
       {/* Featured Projects Section */}
       <section id="projects" className="w-full bg-gradient-to-b from-background to-muted/30 mt-[-1px]">

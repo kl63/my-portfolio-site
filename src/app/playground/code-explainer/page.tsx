@@ -330,7 +330,7 @@ console.log(fibonacci(10));`)}
                       <div className="text-center">
                         <Code className="h-12 w-12 mx-auto mb-4 opacity-50" />
                         <p>Your code explanation will appear here</p>
-                        <p className="text-sm mt-2">Paste your code and click "Explain Code"</p>
+                        <p className="text-sm mt-2">Paste your code and I&apos;ll explain it in simple terms</p>
                       </div>
                     </div>
                   )}

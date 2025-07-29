@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
+import Image from "next/image"
 import { usePathname } from "next/navigation"
 import { motion } from "framer-motion"
 import { Menu, X } from "lucide-react"
@@ -55,6 +56,24 @@ export default function Navbar() {
           ))}
         </div>
         
+        {/* GitHub Actions Status Badge */}
+        <div className="hidden md:flex items-center">
+          <a
+            href="https://github.com/kl63/my-portfolio-site/actions"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="transition-opacity hover:opacity-80"
+          >
+            <Image
+              src="https://github.com/kl63/my-portfolio-site/workflows/Deploy%20to%20Production/badge.svg"
+              alt="GitHub Actions Status"
+              width={120}
+              height={20}
+              className="h-5 w-auto"
+            />
+          </a>
+        </div>
+        
         {/* Mobile Menu Button */}
         <div className="md:hidden">
           <button
@@ -91,6 +110,24 @@ export default function Navbar() {
                 {item.name}
               </Link>
             ))}
+            
+            {/* GitHub Actions Status Badge - Mobile */}
+            <div className="px-4 py-2">
+              <a
+                href="https://github.com/kl63/my-portfolio-site/actions"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="transition-opacity hover:opacity-80 block"
+              >
+                <Image
+                  src="https://github.com/kl63/my-portfolio-site/workflows/Deploy%20to%20Production/badge.svg"
+                  alt="GitHub Actions Status"
+                  width={120}
+                  height={20}
+                  className="h-5 w-auto"
+                />
+              </a>
+            </div>
           </div>
         </motion.div>
       )}

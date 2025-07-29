@@ -5,6 +5,7 @@ import ColorfulNavbar from "@/components/ui/colorful-navbar";
 import ColorfulFooter from "@/components/ui/colorful-footer";
 import GoogleAnalytics from "@/components/google-analytics";
 import MiniChatbox from "@/components/ui/mini-chatbox";
+import CookieConsent from "@/components/ui/cookie-consent";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -38,6 +39,7 @@ export default function RootLayout({
         <main className="flex-grow pt-16">{children}</main>
         <ColorfulFooter />
         <MiniChatbox />
+        <CookieConsent />
       </body>
     </html>
   );

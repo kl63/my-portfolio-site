@@ -5,6 +5,7 @@ import { Home, FolderOpen, Award, Mail, Sparkles } from 'lucide-react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 interface NavItem {
   name: string
@@ -31,6 +32,7 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
   const pathname = usePathname()
   const [isOpen, setIsOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     const handleScroll = () => {
@@ -65,7 +67,7 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
               variants={logoVariants}
               initial="initial"
               animate="animate"
-              whileTap="tap"
+              whileTap={shouldReduceMotion ? {} : "tap"}
             >
               <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-600 via-pink-600 to-blue-600 flex items-center justify-center text-white font-bold text-xl shadow-lg">
                 KL
@@ -102,8 +104,8 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                         transition: { duration: 0.3, delay: index * 0.1 },
                       },
                     }}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
+                    whileHover={{ scale: shouldReduceMotion ? 1 : 1.05 }}
+                    whileTap={{ scale: shouldReduceMotion ? 1 : 0.95 }}
                   >
                     <Link 
                       key={item.name} 
@@ -170,7 +172,7 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                 ? 'bg-muted/70 hover:bg-muted/90 text-foreground' 
                 : 'bg-white/90 hover:bg-white text-gray-900 shadow-lg border border-gray-200'
             }`}
-            whileTap={{ scale: 0.9 }}
+            whileTap={shouldReduceMotion ? {} : { scale: 0.9 }}
             aria-label={isOpen ? "Close menu" : "Open menu"}
             style={{ minWidth: '48px', minHeight: '48px' }}
           >
@@ -218,15 +220,16 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
+              transition={shouldReduceMotion ? { duration: 0 } : undefined}
               onClick={() => setIsOpen(false)}
             />
 
             <motion.div
               className="fixed right-0 top-0 bottom-0 w-3/4 z-50 md:hidden bg-background shadow-2xl"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              exit={{ x: "100%" }}
-              transition={{ type: "spring", damping: 20 }}
+              initial={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
+              animate={shouldReduceMotion ? { opacity: 1 } : { x: 0 }}
+              exit={shouldReduceMotion ? { opacity: 0 } : { x: "100%" }}
+              transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", damping: 20 }}
             >
               <div className="flex flex-col h-full">
                 <div className="p-4 flex justify-between items-center border-b border-border">
@@ -241,7 +244,7 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                   <motion.button
                     onClick={toggleMenu}
                     className="p-2 rounded-full hover:bg-muted/50 transition-colors"
-                    whileTap={{ scale: 0.9 }}
+                    whileTap={shouldReduceMotion ? {} : { scale: 0.9 }}
                   >
                     <svg 
                       width="20" 

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Sparkles, ArrowRight, X, Zap, Brain, Image, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 interface AIPlaygroundPopupProps {
   delay?: number // Delay in milliseconds before showing popup
@@ -16,6 +17,7 @@ const AIPlaygroundPopup: React.FC<AIPlaygroundPopupProps> = ({
 }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [hasShown, setHasShown] = useState(false)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     // Show popup after delay on every page load
@@ -62,6 +64,7 @@ const AIPlaygroundPopup: React.FC<AIPlaygroundPopupProps> = ({
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : undefined}
             className="fixed inset-0 bg-black/60 backdrop-blur-md z-[9998]"
             onClick={handleClose}
             style={{ 
@@ -76,10 +79,10 @@ const AIPlaygroundPopup: React.FC<AIPlaygroundPopupProps> = ({
 
           {/* Popup Modal */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 50 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 50 }}
-            transition={{ type: "spring", damping: 20, stiffness: 300 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8, y: 50 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1, y: 0 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.8, y: 50 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", damping: 20, stiffness: 300 }}
             className={`fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[9999] w-full max-w-lg mx-4 ${className}`}
             style={{
               position: 'fixed',

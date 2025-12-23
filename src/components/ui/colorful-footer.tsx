@@ -4,6 +4,7 @@ import React from 'react';
 import { Github, Linkedin, Mail,  MapPin,  Home, FolderOpen, Award } from 'lucide-react';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 interface FooterLink {
   label: string;
@@ -60,14 +61,16 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
   companyName = "Kevin Lin",
   description = "Software engineer and designer specializing in creating beautiful, functional, and user-friendly applications."
 }) => {
+  const shouldReduceMotion = useReducedMotion();
+
   const footerVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.2,
-        duration: 0.6
+        delay: shouldReduceMotion ? 0 : 0.2,
+        duration: shouldReduceMotion ? 0 : 0.6
       }
     }
   };
@@ -78,7 +81,7 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
       opacity: 1,
       y: 0,
       transition: {
-        duration: 0.4
+        duration: shouldReduceMotion ? 0 : 0.4
       }
     }
   };
@@ -86,7 +89,7 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
   const staggerContainer = {
     visible: {
       transition: {
-        staggerChildren: 0.1
+        staggerChildren: shouldReduceMotion ? 0 : 0.1
       }
     }
   };
@@ -136,8 +139,8 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
                   className="p-2 rounded-full bg-gradient-to-br from-purple-600/10 via-pink-600/10 to-blue-600/10 hover:from-purple-600/20 hover:via-pink-600/20 hover:to-blue-600/20 text-foreground hover:text-purple-600 transition-all duration-300"
                   aria-label={social.label}
                   variants={childVariants}
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: shouldReduceMotion ? 1 : 1.1 }}
+                  whileTap={{ scale: shouldReduceMotion ? 1 : 0.95 }}
                 >
                   {social.icon}
                 </motion.a>
@@ -162,7 +165,7 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
                   {section.links.map((link, linkIdx) => (
                     <motion.li 
                       key={linkIdx}
-                      whileHover={{ x: 5 }}
+                      whileHover={{ x: shouldReduceMotion ? 0 : 5 }}
                       transition={{ type: "spring", stiffness: 400 }}
                     >
                       <Link href={link.href} className="text-sm text-foreground hover:text-purple-600 transition-colors flex items-center gap-2">
@@ -224,7 +227,7 @@ const ColorfulFooter: React.FC<ColorfulFooterProps> = ({
         >
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-              <span>© {new Date().getFullYear()} {companyName}. All rights reserved.</span>
+              <span> {new Date().getFullYear()} {companyName}. All rights reserved.</span>
             </div>
             
           </div>

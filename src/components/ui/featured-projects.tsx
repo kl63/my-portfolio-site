@@ -4,8 +4,10 @@ import React from 'react'
 import { Card, CardContent } from '@/components/ui/card'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
-import { ArrowRight, ExternalLink, Github } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { ExternalLink, Github, ArrowRight } from 'lucide-react'
 import Link from 'next/link'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 import Image from 'next/image'
 import { PROJECTS } from '@/components/ui/portfolio-projects'
 
@@ -42,6 +44,8 @@ const FeaturedProjects: React.FC<FeaturedProjectsProps> = ({
 }) => {
   // Reference for the scrollable container
   const containerRef = React.useRef<HTMLDivElement>(null)
+
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <section className="w-full py-0 px-0 md:px-0">

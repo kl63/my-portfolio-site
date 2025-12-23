@@ -4,8 +4,10 @@ import React from 'react'
 import { Mail, MapPin } from 'lucide-react'
 import { motion } from 'framer-motion'
 import ContactForm from '@/components/ui/contact-form'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 export default function ContactPage() {
+  const shouldReduceMotion = useReducedMotion()
 
   return (
     <div className="container mx-auto px-4 py-12">
@@ -26,9 +28,9 @@ export default function ContactPage() {
           <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
           
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.1 }}
             className="flex items-start space-x-4"
           >
             <div className="bg-primary/10 p-3 rounded-lg">
@@ -41,9 +43,9 @@ export default function ContactPage() {
           </motion.div>
 
           <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.2 }}
             className="flex items-start space-x-4"
           >
             <div className="bg-primary/10 p-3 rounded-lg">

@@ -28,8 +28,8 @@ jobs:
 
       - name: Deploy to DigitalOcean
         env:
-          HOST: 159.89.245.206
-          USERNAME: root
+          HOST: 134.122.5.11
+          USERNAME: kevinlin192003
           TARGET_DIR: /var/www/my-portfolio-site
           APP_NAME: my-portfolio-site
           PORT: 3000

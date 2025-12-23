@@ -4,6 +4,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import { Download, Github, Linkedin, Mail, Code, Terminal, Zap, Layers } from "lucide-react";
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 // Main Hero Component
 interface DeveloperPortfolioHeroProps {
@@ -19,7 +20,7 @@ interface DeveloperPortfolioHeroProps {
   className?: string;
 }
 
-const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
+export default function DeveloperPortfolioHero({
   name = "Kevin Lin",
   title = "Full Stack Developer",
   roles = ["Web Developer", "UI Designer", "Problem Solver", "Tech Enthusiast"],
@@ -30,7 +31,9 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
   emailAddress = "hello@example.com",
   resumeUrl = "/resume.pdf",
   className = "",
-}) => {
+}) {
+  const shouldReduceMotion = useReducedMotion();
+
   // Define our animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -81,11 +84,11 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
               top: `${20 + (i * 15)}%`,
               left: `${10 + (i * 20)}%`,
             }}
-            animate={{
+            animate={shouldReduceMotion ? {} : {
               y: [0, -15, 0],
               opacity: [0.05, 0.1, 0.05]
             }}
-            transition={{
+            transition={shouldReduceMotion ? {} : {
               repeat: Infinity,
               duration: 5 + i,
               ease: "easeInOut",
@@ -103,12 +106,12 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           className="flex flex-col items-center text-center max-w-3xl mx-auto"
           variants={containerVariants}
           initial="hidden"
-          animate="visible"
+          animate={shouldReduceMotion ? "visible" : "visible"}
         >
           {/* Main heading with gradient */}
           <motion.h1 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-5xl md:text-6xl font-bold tracking-tight"
           >
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-500 via-indigo-400 to-purple-500">
@@ -119,7 +122,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           {/* Job title */}
           <motion.h2 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-xl md:text-2xl mt-3 font-medium text-foreground/80"
           >
             {title}
@@ -128,7 +131,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           {/* Roles */}
           <motion.div 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex flex-wrap justify-center gap-2 mt-2">
             {roles.map((role, index) => (
               <div key={role} className="flex items-center">
@@ -141,14 +144,14 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           {/* Divider */}
           <motion.div 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="w-16 h-1 bg-gradient-to-r from-blue-500 to-indigo-500 rounded-full my-4"
           />
 
           {/* Bio */}
           <motion.p 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="text-base text-muted-foreground max-w-2xl leading-relaxed"
           >
             {bio}
@@ -157,7 +160,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           {/* Skills */}
           <motion.div 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex flex-wrap justify-center gap-2 mt-8 max-w-2xl mx-auto">
             {skills && skills.map((skill) => (
               <motion.span
@@ -165,7 +168,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
                 className="inline-flex items-center rounded-full px-3 py-1.5 text-sm font-medium
                   bg-gradient-to-r from-blue-500/80 to-indigo-500/80 text-white
                   hover:from-blue-600 hover:to-indigo-600 shadow-md"
-                whileHover={{ scale: 1.05 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.05 }}
               >
                 {skill}
               </motion.span>
@@ -175,7 +178,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           {/* Action buttons */}
           <motion.div 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex flex-wrap justify-center gap-4 mt-6">
             <Button 
               size="lg"
@@ -203,7 +206,7 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           {/* Social links */}
           <motion.div 
             variants={itemVariants}
-            transition={{ duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
+            transition={shouldReduceMotion ? {} : { duration: 0.6, ease: [0.25, 0.1, 0.25, 1] }}
             className="flex justify-center space-x-6 mt-6">
             {githubUrl && (
               <motion.a 
@@ -211,8 +214,8 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground hover:text-foreground transition-colors"
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.1, y: -5 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.9 }}
               >
                 <Github className="h-5 w-5" />
               </motion.a>
@@ -223,8 +226,8 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
                 target="_blank"
                 rel="noopener noreferrer"
                 className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground hover:text-foreground transition-colors"
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.1, y: -5 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.9 }}
               >
                 <Linkedin className="h-5 w-5" />
               </motion.a>
@@ -233,8 +236,8 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
               <motion.a 
                 href={`mailto:${emailAddress}`}
                 className="p-3 rounded-full bg-secondary/50 hover:bg-secondary text-foreground hover:text-foreground transition-colors"
-                whileHover={{ scale: 1.1, y: -5 }}
-                whileTap={{ scale: 0.9 }}
+                whileHover={shouldReduceMotion ? {} : { scale: 1.1, y: -5 }}
+                whileTap={shouldReduceMotion ? {} : { scale: 0.9 }}
               >
                 <Mail className="h-5 w-5" />
               </motion.a>
@@ -245,18 +248,18 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
           <motion.div
             className="mt-8"
             initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 1.5, duration: 1 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1 }}
+            transition={shouldReduceMotion ? {} : { delay: 1.5, duration: 1 }}
           >
             <motion.div 
               className="w-6 h-10 border-2 border-muted rounded-full flex justify-center"
-              animate={{ y: [0, 10, 0] }}
-              transition={{ duration: 2, repeat: Infinity }}
+              animate={shouldReduceMotion ? {} : { y: [0, 10, 0] }}
+              transition={shouldReduceMotion ? {} : { duration: 2, repeat: Infinity }}
             >
               <motion.div 
                 className="w-1 h-3 bg-muted rounded-full mt-2"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                animate={shouldReduceMotion ? {} : { y: [0, 10, 0] }}
+                transition={shouldReduceMotion ? {} : { duration: 2, repeat: Infinity }}
               />
             </motion.div>
           </motion.div>
@@ -265,5 +268,3 @@ const DeveloperPortfolioHero: React.FC<DeveloperPortfolioHeroProps> = ({
     </div>
   );
 };
-
-export default DeveloperPortfolioHero;

@@ -4,6 +4,7 @@ import React, { useState } from 'react'
 import { motion } from 'framer-motion'
 import { Sparkles, ArrowRight, X, Zap, Brain, Image, MessageSquare, Mic, FileText } from 'lucide-react'
 import Link from 'next/link'
+import { useReducedMotion, getTransitionDuration } from '@/hooks/useReducedMotion'
 
 interface AIPlaygroundPromoProps {
   className?: string
@@ -12,6 +13,7 @@ interface AIPlaygroundPromoProps {
 const AIPlaygroundPromo: React.FC<AIPlaygroundPromoProps> = ({ className }) => {
   const [isVisible, setIsVisible] = useState(true)
   const [isExpanded, setIsExpanded] = useState(false)
+  const shouldReduceMotion = useReducedMotion()
 
   const aiTools = [
     { icon: <MessageSquare className="w-4 h-4" />, name: "AI Chat", description: "Interactive conversations", url: "/playground/chatbot" },
@@ -26,9 +28,10 @@ const AIPlaygroundPromo: React.FC<AIPlaygroundPromoProps> = ({ className }) => {
 
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -20 }}
+      initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+      animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+      exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
+      transition={shouldReduceMotion ? { duration: 0 } : undefined}
       className={`relative overflow-hidden ${className}`}
     >
       {/* Main Promo Card */}
@@ -69,9 +72,9 @@ const AIPlaygroundPromo: React.FC<AIPlaygroundPromoProps> = ({ className }) => {
             {aiTools.slice(0, isExpanded ? aiTools.length : 6).map((tool, index) => (
               <motion.div
                 key={tool.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
+                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, scale: 0.9 }}
+                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, scale: 1 }}
+                transition={shouldReduceMotion ? { duration: 0 } : { delay: index * 0.1 }}
               >
                 <Link
                   href={tool.url}

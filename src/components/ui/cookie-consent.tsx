@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Cookie, Check, X } from 'lucide-react'
 import Link from 'next/link'
+import { useReducedMotion, getTransitionDuration } from '@/hooks/useReducedMotion'
 
 interface CookieConsentProps {
   className?: string
@@ -12,6 +13,7 @@ interface CookieConsentProps {
 const CookieConsent: React.FC<CookieConsentProps> = ({ className }) => {
   const [isVisible, setIsVisible] = useState(false)
   const [showDetails, setShowDetails] = useState(false)
+  const shouldReduceMotion = useReducedMotion()
 
   useEffect(() => {
     // Check if user has already given consent
@@ -46,10 +48,10 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ className }) => {
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ y: 100, opacity: 0 }}
-        animate={{ y: 0, opacity: 1 }}
-        exit={{ y: 100, opacity: 0 }}
-        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        initial={shouldReduceMotion ? { opacity: 0 } : { y: 100, opacity: 0 }}
+        animate={shouldReduceMotion ? { opacity: 1 } : { y: 0, opacity: 1 }}
+        exit={shouldReduceMotion ? { opacity: 0 } : { y: 100, opacity: 0 }}
+        transition={shouldReduceMotion ? { duration: 0 } : { type: "spring", damping: 25, stiffness: 300 }}
         className={`fixed bottom-0 left-0 right-0 z-[9997] ${className}`}
       >
         <div className="bg-gradient-to-r from-purple-600/10 via-pink-600/10 to-blue-600/10 backdrop-blur-md border-t border-purple-200/30 shadow-2xl relative overflow-hidden">
@@ -81,10 +83,10 @@ const CookieConsent: React.FC<CookieConsentProps> = ({ className }) => {
                   <AnimatePresence>
                     {showDetails && (
                       <motion.div
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                        transition={{ duration: 0.3 }}
+                        initial={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        animate={shouldReduceMotion ? { opacity: 1 } : { height: 'auto', opacity: 1 }}
+                        exit={shouldReduceMotion ? { opacity: 0 } : { height: 0, opacity: 0 }}
+                        transition={{ duration: getTransitionDuration(shouldReduceMotion, 0.3) }}
                         className="mt-3 pt-3 border-t border-purple-200/30 bg-gradient-to-r from-purple-50/10 via-pink-50/10 to-blue-50/10"
                       >
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-3 text-xs text-muted-foreground">

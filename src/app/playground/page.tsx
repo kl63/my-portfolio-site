@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { 
   MessageCircle, 
   BookOpen, 
@@ -220,7 +221,9 @@ const categories = [
 ];
 
 export default function PlaygroundPage() {
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const shouldReduceMotion = useReducedMotion();
 
   const filteredApps = (selectedCategory === 'all' 
     ? aiApps 
@@ -279,9 +282,9 @@ export default function PlaygroundPage() {
 
           {/* Stats */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.3 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: 0.3 }}
             className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8"
           >
             <Card className="text-center">
@@ -318,15 +321,15 @@ export default function PlaygroundPage() {
             <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ duration: 0.3 }}
+              transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3 }}
               className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
             >
               {filteredApps.map((app, index) => (
                 <motion.div
                   key={app.id}
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                  animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                  transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.5, delay: index * 0.1 }}
                 >
                   <Card 
                     className={`h-full cursor-pointer transition-all duration-300 hover:shadow-lg hover:scale-105 ${

@@ -1,8 +1,9 @@
 "use client"
 
 import * as React from "react"
-import { motion, useScroll, HTMLMotionProps, LayoutGroup } from "framer-motion"
-import { Code, Database, Globe, Smartphone, Server, Palette, Calendar, MapPin, ExternalLink } from "lucide-react"
+import { motion, useScroll, HTMLMotionProps, LayoutGroup, AnimatePresence } from "framer-motion"
+import { Code, Database, Globe, Smartphone, Server, Palette, Calendar, MapPin, ExternalLink } from 'lucide-react'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from "@/lib/utils"
 
 // CircleProgress Component
@@ -378,6 +379,7 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
   const [activeExperience, setActiveExperience] = React.useState(0)
   const experienceRef = React.useRef<HTMLDivElement>(null)
   const [isClient, setIsClient] = React.useState(false)
+  const shouldReduceMotion = useReducedMotion()
 
   React.useEffect(() => {
     setIsClient(true)
@@ -452,11 +454,11 @@ function SkillsExperienceTimeline({ className }: SkillsExperienceTimelineProps) 
                 {filteredSkills.map((skill) => (
                   <motion.div
                     key={skill.name}
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -20 }}
-                    transition={{ duration: 0.3 }}
+                    layout={!shouldReduceMotion}
+                    initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 }}
+                    animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 }}
+                    exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: -20 }}
+                    transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3 }}
                     className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 p-4 rounded-lg border bg-card hover:bg-card/80 transition-colors"
                   >
                     <div className="p-2 rounded-full bg-primary/10 text-primary flex-shrink-0">

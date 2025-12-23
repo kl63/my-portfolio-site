@@ -3,6 +3,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { MessageCircle, X, Send, Loader2, Bot, User, Minimize2, Maximize2 } from 'lucide-react';
+import { useReducedMotion } from '@/hooks/useReducedMotion';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Card, CardContent, CardHeader } from '@/components/ui/card';
@@ -27,6 +28,7 @@ export default function MiniChatbox() {
   ]);
   const [inputMessage, setInputMessage] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const shouldReduceMotion = useReducedMotion();
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const chatboxRef = useRef<HTMLDivElement>(null);
@@ -142,10 +144,10 @@ export default function MiniChatbox() {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.8, y: 20 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.8, y: 20 }}
-            transition={{ duration: 0.2 }}
+            initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.9 }}
+            animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0, scale: 1 }}
+            exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20, scale: 0.9 }}
+            transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.2 }}
             className="mb-4"
           >
             <Card className="w-80 h-96 shadow-2xl border-2 border-purple-200 dark:border-purple-800">
@@ -284,17 +286,18 @@ export default function MiniChatbox() {
 
       {/* Chat Toggle Button - Only show when chat is closed */}
       {!isOpen && (
-        <motion.div
-          whileHover={{ scale: 1.1 }}
-          whileTap={{ scale: 0.9 }}
+        <motion.button
+          whileHover={shouldReduceMotion ? {} : { scale: 1.1 }}
+          whileTap={shouldReduceMotion ? {} : { scale: 0.9 }}
+          animate={shouldReduceMotion ? {} : { 
+            rotate: isOpen ? 180 : 0,
+          }}
+          transition={shouldReduceMotion ? { duration: 0 } : { duration: 0.3 }}
+          onClick={toggleOpen}
+          className="rounded-full w-14 h-14 shadow-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700 flex items-center justify-center"
         >
-          <Button
-            onClick={toggleOpen}
-            className="rounded-full w-14 h-14 shadow-lg bg-gradient-to-r from-purple-600 to-pink-600 hover:from-purple-700 hover:to-pink-700"
-          >
-            <MessageCircle className="h-6 w-6 text-white" />
-          </Button>
-        </motion.div>
+          <MessageCircle className="h-6 w-6 text-white" />
+        </motion.button>
       )}
 
       {/* Notification Badge */}

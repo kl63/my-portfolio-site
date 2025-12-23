@@ -9,7 +9,7 @@ import {
   FileText, 
   Scissors, 
   HelpCircle,
-  Image,
+  Image as ImageIcon,
   User,
   Wand2,
   Smile,
@@ -90,7 +90,7 @@ const aiApps: AIApp[] = [
     id: 'image-generator',
     title: 'AI Image Generator',
     description: 'Create stunning images from text prompts using advanced AI models.',
-    icon: <Image className="h-6 w-6" />,
+    icon: <ImageIcon className="h-6 w-6" />,
     category: 'image',
     status: 'available',
     difficulty: 'beginner'
@@ -214,7 +214,7 @@ const aiApps: AIApp[] = [
 const categories = [
   { id: 'all', label: 'All Apps', icon: <Wand2 className="h-4 w-4" /> },
   { id: 'text', label: 'Text & Chat', icon: <MessageCircle className="h-4 w-4" /> },
-  { id: 'image', label: 'Image & Media', icon: <Image className="h-4 w-4" /> },
+  { id: 'image', label: 'Image & Media', icon: <ImageIcon className="h-4 w-4" /> },
   { id: 'audio', label: 'Audio & Video', icon: <Mic className="h-4 w-4" /> },
   { id: 'learning', label: 'Learning Tools', icon: <Code className="h-4 w-4" /> },
   { id: 'fun', label: 'Fun & Interactive', icon: <Gamepad2 className="h-4 w-4" /> }
@@ -222,7 +222,6 @@ const categories = [
 
 export default function PlaygroundPage() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const [searchTerm, setSearchTerm] = useState<string>('');
   const shouldReduceMotion = useReducedMotion();
 
   const filteredApps = (selectedCategory === 'all' 

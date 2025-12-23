@@ -7,19 +7,6 @@ import { Download, Github, Linkedin, Mail, Code, Terminal, Zap, Layers } from "l
 import { useReducedMotion } from '@/hooks/useReducedMotion';
 
 // Main Hero Component
-interface DeveloperPortfolioHeroProps {
-  name?: string;
-  title?: string;
-  roles?: string[];
-  bio?: string;
-  skills?: string[];
-  githubUrl?: string;
-  linkedinUrl?: string;
-  emailAddress?: string;
-  resumeUrl?: string;
-  className?: string;
-}
-
 export default function DeveloperPortfolioHero({
   name = "Kevin Lin",
   title = "Full Stack Developer",

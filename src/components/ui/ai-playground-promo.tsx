@@ -2,9 +2,9 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Sparkles, ArrowRight, X, Zap, Brain, Image, MessageSquare, Mic, FileText } from 'lucide-react'
+import { Sparkles, ArrowRight, X, Zap, Brain, Image as ImageIcon, MessageSquare, Mic, FileText } from 'lucide-react'
 import Link from 'next/link'
-import { useReducedMotion, getTransitionDuration } from '@/hooks/useReducedMotion'
+import { useReducedMotion } from '@/hooks/useReducedMotion'
 
 interface AIPlaygroundPromoProps {
   className?: string
@@ -17,7 +17,7 @@ const AIPlaygroundPromo: React.FC<AIPlaygroundPromoProps> = ({ className }) => {
 
   const aiTools = [
     { icon: <MessageSquare className="w-4 h-4" />, name: "AI Chat", description: "Interactive conversations", url: "/playground/chatbot" },
-    { icon: <Image className="w-4 h-4" />, name: "Image Generator", description: "DALL-E 3 powered", url: "/playground/image-generator" },
+    { icon: <ImageIcon className="w-4 h-4" />, name: "Image Generator", description: "DALL-E 3 powered", url: "/playground/image-generator" },
     { icon: <Brain className="w-4 h-4" />, name: "Meme Creator", description: "AI-powered memes", url: "/playground/meme-generator" },
     { icon: <FileText className="w-4 h-4" />, name: "Text Tools", description: "Summarize & explain", url: "/playground/text-summarizer" },
     { icon: <Mic className="w-4 h-4" />, name: "Voice Features", description: "Speech & audio tools", url: "/playground/voice-to-text" },

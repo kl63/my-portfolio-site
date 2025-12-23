@@ -157,7 +157,7 @@ export default function MiniChatbox() {
                   <div className="flex items-center gap-2">
                     <Bot className="h-5 w-5" />
                     <div>
-                      <h3 className="font-semibold text-sm">Kevin's AI Assistant</h3>
+                      <h3 className="font-semibold text-sm">Kevin&apos;s AI Assistant</h3>
                       <p className="text-xs opacity-90">Always here to help!</p>
                     </div>
                   </div>

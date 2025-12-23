@@ -288,6 +288,7 @@ export default function MemeGeneratorPage() {
                     </div>
                     {customImage && (
                       <div className="mt-4">
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={customImage}
                           alt="Custom meme template"
@@ -419,6 +420,7 @@ export default function MemeGeneratorPage() {
                     <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-6 text-center space-y-4">
                       {generatedMemeImage ? (
                         <div className="w-full">
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={generatedMemeImage}
                             alt={`Generated meme: ${topText} / ${bottomText}`}
@@ -427,11 +429,14 @@ export default function MemeGeneratorPage() {
                           <p className="text-sm text-gray-500 mt-2">AI-Generated Meme</p>
                         </div>
                       ) : customImage ? (
-                        <img
-                          src={customImage}
-                          alt="Meme template"
-                          className="w-full max-w-sm mx-auto rounded-lg"
-                        />
+                        <>
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
+                          <img
+                            src={customImage}
+                            alt="Meme template"
+                            className="w-full max-w-sm mx-auto rounded-lg"
+                          />
+                        </>
                       ) : (
                         <div className="w-full max-w-sm mx-auto h-64 bg-gray-200 dark:bg-gray-700 rounded-lg flex items-center justify-center">
                           <div className="text-center">

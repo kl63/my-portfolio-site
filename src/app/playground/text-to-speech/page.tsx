@@ -362,7 +362,7 @@ export default function TextToSpeechPage() {
                 ) : (
                   <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                     <VolumeX className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Enter text and click "Generate Speech" to create audio</p>
+                    <p>Enter text and click &quot;Generate Speech&quot; to create audio</p>
                     <p className="text-sm mt-2">Supports multiple voices and speed control</p>
                   </div>
                 )}

@@ -396,7 +396,7 @@ export default function ResumeGeneratorPage() {
                 ) : (
                   <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                     <FileText className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Fill in your information and click "Generate Resume" to create your professional resume</p>
+                    <p>Fill in your information and click &quot;Generate Resume&quot; to create your professional resume</p>
                   </div>
                 )}
               </CardContent>

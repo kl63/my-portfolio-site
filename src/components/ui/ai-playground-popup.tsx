@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Sparkles, ArrowRight, X, Zap, Brain, Image, MessageSquare } from 'lucide-react'
+import { Sparkles, ArrowRight, X, Zap, Brain, Image as ImageIcon, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 
@@ -124,7 +124,7 @@ const AIPlaygroundPopup: React.FC<AIPlaygroundPopupProps> = ({
                     <span className="text-sm font-medium">AI Chat</span>
                   </div>
                   <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">
-                    <Image className="w-4 h-4 text-primary" />
+                    <ImageIcon className="w-4 h-4 text-primary" />
                     <span className="text-sm font-medium">Image Gen</span>
                   </div>
                   <div className="flex items-center gap-2 p-3 rounded-lg bg-muted/50">

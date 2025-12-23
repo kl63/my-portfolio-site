@@ -313,7 +313,7 @@ export default function TextSummarizerPage() {
                       <div className="text-center">
                         <Scissors className="h-12 w-12 mx-auto mb-4 opacity-50" />
                         <p>Your summary will appear here</p>
-                        <p className="text-sm mt-2">Paste your text and click "Summarize Text"</p>
+                        <p className="text-sm mt-2">Paste your text and click &quot;Summarize Text&quot;</p>
                       </div>
                     </div>
                   )}

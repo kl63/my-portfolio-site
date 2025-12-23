@@ -274,7 +274,7 @@ export default function MathSolverPage() {
                 ) : (
                   <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                     <Calculator className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Enter a math problem and click "Solve Problem" to see the solution</p>
+                    <p>Enter a math problem and click &quot;Solve Problem&quot; to see the solution</p>
                     <p className="text-sm mt-2">Supports algebra, calculus, geometry, and more</p>
                   </div>
                 )}

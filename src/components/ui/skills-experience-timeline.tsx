@@ -1,7 +1,7 @@
 "use client"
 
 import * as React from "react"
-import { motion, useScroll, HTMLMotionProps, LayoutGroup, AnimatePresence } from "framer-motion"
+import { motion, useScroll, HTMLMotionProps, LayoutGroup } from "framer-motion"
 import { Code, Database, Globe, Smartphone, Server, Palette, Calendar, MapPin, ExternalLink } from 'lucide-react'
 import { useReducedMotion } from '@/hooks/useReducedMotion'
 import { cn } from "@/lib/utils"

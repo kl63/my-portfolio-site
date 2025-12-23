@@ -394,7 +394,7 @@ ${generatedPersonality.fears}`;
                         <div>
                           <h5 className="font-semibold mb-2">Sample Dialogue</h5>
                           <blockquote className="text-sm italic text-gray-600 dark:text-gray-300 border-l-4 border-purple-400 pl-4">
-                            "{generatedPersonality.dialogue}"
+                            &quot;{generatedPersonality.dialogue}&quot;
                           </blockquote>
                         </div>
                       </div>
@@ -418,7 +418,7 @@ ${generatedPersonality.fears}`;
                 ) : (
                   <div className="text-center py-12 text-gray-500 dark:text-gray-400">
                     <Users className="h-12 w-12 mx-auto mb-4 opacity-50" />
-                    <p>Select your preferences and click "Generate" to create a unique character</p>
+                    <p>Select your preferences and click &quot;Generate&quot; to create a unique character</p>
                     <p className="text-sm mt-2">Perfect for writers, game masters, and creative projects</p>
                   </div>
                 )}

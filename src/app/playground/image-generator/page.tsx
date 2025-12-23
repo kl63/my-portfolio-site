@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { Image, ArrowLeft, Wand2, Download, RefreshCw, Copy } from 'lucide-react';
+import { Image as ImageIcon, ArrowLeft, Wand2, Download, RefreshCw, Copy } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -237,7 +237,7 @@ export default function ImageGeneratorPage() {
                     </>
                   ) : (
                     <>
-                      <Image className="h-4 w-4 mr-2" />
+                      <ImageIcon className="h-4 w-4 mr-2" />
                       Generate Image
                     </>
                   )}
@@ -281,7 +281,7 @@ export default function ImageGeneratorPage() {
               <CardHeader>
                 <div className="flex items-center justify-between">
                   <CardTitle className="flex items-center gap-2">
-                    <Image className="h-5 w-5" />
+                    <ImageIcon className="h-5 w-5" />
                     Generated Image
                   </CardTitle>
                   {generatedImage && (
@@ -312,6 +312,7 @@ export default function ImageGeneratorPage() {
                     </div>
                   ) : generatedImage ? (
                     <div className="w-full h-full relative">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src={generatedImage}
                         alt={prompt || "AI generated image"}
@@ -324,7 +325,7 @@ export default function ImageGeneratorPage() {
                   ) : (
                     <div className="w-full h-full bg-gray-100 dark:bg-gray-800 rounded-lg flex items-center justify-center">
                       <div className="text-center text-gray-500 dark:text-gray-400">
-                        <Image className="h-12 w-12 mx-auto mb-4 opacity-50" />
+                        <ImageIcon className="h-12 w-12 mx-auto mb-4 opacity-50" />
                         <p>Your generated image will appear here</p>
                         <p className="text-sm mt-2">Enter a description and click &quot;Generate Image&quot;</p>
                       </div>
@@ -343,6 +344,7 @@ export default function ImageGeneratorPage() {
                           className="aspect-square cursor-pointer hover:opacity-80 transition-opacity"
                           onClick={() => setGeneratedImage(img.url)}
                         >
+                          {/* eslint-disable-next-line @next/next/no-img-element */}
                           <img
                             src={img.url}
                             alt={img.prompt || "AI generated image"}

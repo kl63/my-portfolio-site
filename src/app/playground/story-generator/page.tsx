@@ -140,7 +140,7 @@ export default function StoryGeneratorPage() {
                     className="w-full"
                   />
                   <p className="text-sm text-gray-500 dark:text-gray-400">
-                    Enter any topic, character, or situation you'd like the story to be about
+                    Enter any topic, character, or situation you&apos;d like the story to be about
                   </p>
                 </div>
 
@@ -273,7 +273,7 @@ export default function StoryGeneratorPage() {
                       <div className="text-center">
                         <BookOpen className="h-12 w-12 mx-auto mb-4 opacity-50" />
                         <p>Your generated story will appear here</p>
-                        <p className="text-sm mt-2">Enter a topic and click "Generate Story" to begin</p>
+                        <p className="text-sm mt-2">Enter a topic and click &quot;Generate Story&quot; to begin</p>
                       </div>
                     </div>
                   )}

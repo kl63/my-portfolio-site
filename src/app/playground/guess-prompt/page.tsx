@@ -183,7 +183,7 @@ export default function GuessPromptPage() {
                   <div className="text-left space-y-2 text-sm">
                     <p>• Look at each AI-generated image carefully</p>
                     <p>• Try to guess the original prompt used to create it</p>
-                    <p>• Use hints if you get stuck (but you'll score higher without them!)</p>
+                    <p>• Use hints if you get stuck (but you&apos;ll score higher without them!)</p>
                     <p>• Score points based on how close your guess is to the actual prompt</p>
                   </div>
                 </div>

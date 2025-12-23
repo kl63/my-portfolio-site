@@ -7,7 +7,7 @@ import {
   MessageCircle, 
   BookOpen, 
   Scissors, 
-  Image,
+  Image as ImageIcon,
   Code,
   Gem,
   ArrowLeft,
@@ -42,7 +42,7 @@ const playgroundApps = [
     id: 'image-generator',
     title: 'Image Generator',
     path: '/playground/image-generator',
-    icon: <Image className="h-4 w-4" />,
+    icon: <ImageIcon className="h-4 w-4" />,
     color: 'from-purple-500 to-pink-500'
   },
   {

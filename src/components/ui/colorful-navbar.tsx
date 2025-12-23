@@ -150,6 +150,7 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                 className="transition-opacity hover:opacity-80 rounded-md overflow-hidden"
                 title="View Site Status & GitHub Actions"
               >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
                   src="https://img.shields.io/badge/Site%20Status-Online-brightgreen?style=flat&logo=github"
                   alt="Site Status"
@@ -307,6 +308,7 @@ const ColorfulNavbar: React.FC<ColorfulNavbarProps> = ({
                       className="block transition-opacity hover:opacity-80"
                       onClick={() => setIsOpen(false)}
                     >
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
                       <img
                         src="https://img.shields.io/badge/Site%20Status-Online-brightgreen?style=flat&logo=github"
                         alt="Site Status"
